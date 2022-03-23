@@ -1,0 +1,172 @@
+<resources>
+    <string name="app_name">Diabetes Helper</string>
+    <string name="channel_id">Diabetes Helper</string>
+    <string name="channel_name">diabetesHelper</string>
+    <string name="channel_description">Diabetes Helper Channel</string>
+    <!-- Strings related to login -->
+    <string name="userListFile">userList</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="register">Register</string>
+    <string name="newuser">New User</string>
+
+    <string name="hello_blank_fragment">Hello level fragment</string>
+    <string name="log_menu">Tracker</string>
+    <string name="home_menu">Home</string>
+    <string name="settings_menu">Settings</string>
+    <string-array name="insulin_type">
+        <item>Short acting</item>
+        <item>Long acting</item>
+    </string-array>
+    <string-array name="diabetes_type">
+        <item></item>
+        <item>Type 1</item>
+        <item>Type 2</item>
+    </string-array>
+    <string name="label_gender">Gender:</string>
+    <string-array name="gender">
+        <item></item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string name="label_mood">Mood:</string>
+    <string name="logout">Log out</string>
+    <string name="level">Levels</string>
+    <string name="reminders">Reminders</string>
+    <string name="goals">Goals</string>
+    <string name="save">Save changes</string>
+    <string name="medicine">Medicine</string>
+    <string name="medicines">Medicines</string>
+    <string name="insulin">Insulin</string>
+    <string name="activity_minutes">Minutes of exercise:</string>
+    <string name="activity_desc">Exercise type:</string>
+    <string name="other_medicine">Other medicine</string>
+    <string name="daily">Daily</string>
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
+    <string name="noRepeat">Do not repeat</string>
+    <string name="notificationLabel">Name of reminder</string>
+    <string name="notificationDelete">Delete</string>
+    <string name="notificationEdit">Change</string>
+    <string name="notificationEnable">Turn on</string>
+    <string name="notificationDisable">Turn off</string>
+    <string name="notificationOn">ON</string>
+    <string name="notificationOff">OFF</string>
+    <string name="notificationAdd">Add new reminder</string>
+    <string name="sunday">S</string>
+    <string name="monday">M</string>
+    <string name="tuesday">T</string>
+    <string name="wednesday">W</string>
+    <string name="thursday">Th</string>
+    <string name="friday">F</string>
+    <string name="saturday">Sa</string>
+    <string name="daysOfWeek">Please choose what days to be reminded on:</string>
+    <string name="done">Done</string>
+    <string name="cancel">Cancel</string>
+    <string name="goalType">Goal:   </string>
+    <string name="goalDaily">Daily goal:</string>
+    <string name="goalWeekly">Weekly goal:</string>
+    <string name="diabetesLabel">Diabetes type:</string>
+    <string name="age">Age:</string>
+    <string name="firstName">First name:</string>
+    <string name="lastName">Last name:</string>
+    <string name="next">Next</string>
+    <string name="medicationAdd">Add new medicine</string>
+    <string name="medicationLabel">Medicine name:</string>
+    <string name="a1cNote">Note: this is only a guess of your A1C, and it needs a large number of entries to become a close guess of your actual A1C.</string>
+    <string name="hint_weight">pounds</string>
+    <string name="back">Back</string>
+    <string name="insulinBack">Back to Medicine</string>
+    <string name="toInsulin">Go to Insulin</string>
+    <string name="dosage_label">Times taken per day:</string>
+    <string name="snack">Snack</string>
+    <string name="meal">Meal</string>
+    <string name="mealGoal">Meal goal:</string>
+    <string name="snackGoal">Snack goal:</string>
+    <string name="medLabel">Medicine:</string>
+    <string name="ok">OK</string>
+    <string name="resourceButton">Helpful links</string>
+    <string name="aade7link">American Association of Diabetes Educators: 7 Self Care Behaviors</string>
+    <string name="aade7url">https://www.diabeteseducator.org/living-with-diabetes/aade7-self-care-behaviors</string>
+    <string name="aadelink">American Association of Diabetes Educators</string>
+    <string name="aadeurl">http://www.diabeteseducator.org/living-with-diabetes</string>
+    <string name="adalink">American Diabetes Association</string>
+    <string name="adaurl">http://www.diabetes.org/</string>
+    <string name="ndeplink">National Diabetes Education Program</string>
+    <string name="ndepurl">http://www.cdc.gov/diabetes/ndep/</string>
+    <string name="niddklink">National Institute of Diabetes, Digestive, and Kidney Diseases</string>
+    <string name="niddkurl">http://www.niddk.nih.gov/health-information/diabetes</string>
+    <string name="dtflink">The diaTribe Foundation</string>
+    <string name="dtfurl">http://www.diatribe.org/</string>
+    <string name="hlinelink">Healthline – Diabetes</string>
+    <string name="hlineurl">http://www.healthline.com/health/diabetes/top-iphone-android-apps</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="points">Total Points: 0</string>
+    <string name="dailyPoints">Points Earned Today: 0</string>
+    <string name="totalBadges">Total Badges: 0</string>
+
+
+    <string name="wc">Warrior Club</string>
+    <string name="wctext">
+        \n\n\n\n\n\n\n
+        ♦ Warrior club acknowledges your effort\n\n
+        ♦ Member of warrior club is respected personality\n\n
+        ♦ You manifested a resilient attitudes\n\n
+        ♦ Tomorrow is subject to happiness and care.\n\n
+        ♦ Strive to reach next club.
+    </string>
+
+    <string name="cc">Captaincy Club</string>
+    <string name="cctext">
+        \n\n\n\n\n\n\n
+        ♦ Warrior club acknowledges your effort\n\n
+        ♦ Member of warrior club is respected personality\n\n
+        ♦ You manifested a resilient attitudes\n\n
+        ♦ Tomorrow is subject to happiness and care.\n\n
+        ♦ Strive to reach next club.
+    </string>
+
+    <string name="gc">Governor Club</string>
+    <string name="gctext">
+        \n\n\n\n\n\n\n
+        ♦ Warrior club acknowledges your effort\n\n
+        ♦ Member of warrior club is respected personality\n\n
+        ♦ You manifested a resilient attitudes\n\n
+        ♦ Tomorrow is subject to happiness and care.\n\n
+        ♦ Strive to reach next club.
+    </string>
+
+    <string name="pc">Presidency Club</string>
+    <string name="pctext">
+        \n\n\n\n\n\n\n
+        ♦ Warrior club acknowledges your effort\n\n
+        ♦ Member of warrior club is respected personality\n\n
+        ♦ You manifested a resilient attitudes\n\n
+        ♦ Tomorrow is subject to happiness and care.\n\n
+        ♦ Strive to reach next club.
+    </string>
+
+    <string name="ec">Elite Club</string>
+    <string name="ectext">
+        \n\n\n\n\n\n\n
+        ♦ Warrior club acknowledges your effort\n\n
+        ♦ Member of warrior club is respected personality\n\n
+        ♦ You manifested a resilient attitudes\n\n
+        ♦ Tomorrow is subject to happiness and care.\n\n
+        ♦ Strive to reach next club.
+    </string>
+
+
+
+</resources>

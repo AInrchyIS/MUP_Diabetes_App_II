@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "868871367661",
+    "firebase_url": "https://diabetes-helper-131a0.firebaseio.com",
+    "project_id": "diabetes-helper-131a0",
+    "storage_bucket": "diabetes-helper-131a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868871367661:android:7fa5f1c0162edaca",
+        "android_client_info": {
+          "package_name": "com.example.diabetesmanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "868871367661-p3f6ulus5jb06r6h1oqlg8mmmmqjnklq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.diabetesmanagement",
+            "certificate_hash": "1666e09fc9dc501ee03e0d305e93015cc78dddd2"
+          }
+        },
+        {
+          "client_id": "868871367661-bf5v8qpihl5id736lof1d6h9ro0os9sl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgeabI6u6uyI_78cmLXQxm455L-1UDQOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "868871367661-bf5v8qpihl5id736lof1d6h9ro0os9sl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
