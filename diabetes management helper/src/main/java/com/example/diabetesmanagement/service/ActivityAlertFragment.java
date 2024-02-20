@@ -11,6 +11,8 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.diabetesmanagement.R;
 
+
+
 public class ActivityAlertFragment extends DialogFragment {
 
 
@@ -29,7 +31,7 @@ public class ActivityAlertFragment extends DialogFragment {
                 // User clicked OK button
             }
         });
-        builder.setMessage("Please enter a value greater than or equal to minutes set for the goal or decrease the amount of minutes in goal settings.");
+        builder.setMessage("Please enter a value greater than or equal to minutes set for the goal or decrease the amount of minutes in goal settings.\n\n  (Maximum 180 minutes per day)");
         return builder.create();
     }
 }

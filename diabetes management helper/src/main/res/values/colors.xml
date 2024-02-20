@@ -6,4 +6,5 @@
     <color name="colorBackground">#FFFFFF</color>
     <color name="colorSelected">#91D0C2</color>
     <color name="colorTransparent">#000000</color>
+    <color name="colorWhite">#FFFFFF</color>
 </resources>

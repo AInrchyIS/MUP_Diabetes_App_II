@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.diabetesmanagement.MainActivity;
 import com.example.diabetesmanagement.R;
+import com.example.diabetesmanagement.constatntClass.AddMedicineNoTimesClass;
 import com.example.diabetesmanagement.data.Goal;
 import com.example.diabetesmanagement.data.Medication;
 import com.example.diabetesmanagement.data.User;
@@ -36,13 +37,16 @@ public class MedicationSetupFragment extends Fragment {
     private boolean newMedication = true;
     private User user;
     private EditText medicationName;
+
     private EditText medicationDosage;
+
     private Button cancel;
     private Button save;
     private Bundle medicationBundle;
     private boolean registration;
 
     private OnFragmentInteractionListener mListener;
+    AddMedicineNoTimesClass addMedicineNoTimesClass;
 
     public MedicationSetupFragment() {
         // Required empty public constructor
@@ -71,12 +75,11 @@ public class MedicationSetupFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            user = (User)getArguments().getSerializable(ARG_PARAM1);
+            user = (User) getArguments().getSerializable(ARG_PARAM1);
             if (getArguments().getSerializable(ARG_PARAM2) != null) {
                 medication = (Medication) getArguments().getSerializable(ARG_PARAM2);
                 newMedication = false;
-            }
-            else
+            } else
                 medication = new Medication();
             registration = getArguments().getBoolean(ARG_PARAM3);
         }
@@ -93,9 +96,10 @@ public class MedicationSetupFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        addMedicineNoTimesClass = new AddMedicineNoTimesClass(requireContext());
         medicationName = view.findViewById(R.id.data_medication_name);
         medicationDosage = view.findViewById(R.id.data_medication_dose);
+
         if (!newMedication) {
             medicationName.setText(medication.getName());
             //if (medication.getDailyDoses() == 0)
@@ -106,8 +110,7 @@ public class MedicationSetupFragment extends Fragment {
         save = view.findViewById(R.id.button_medication_save);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 v.playSoundEffect(SoundEffectConstants.CLICK);
                 medicationBundle.putString("button", "cancel");
                 onButtonPressed(medicationBundle);
@@ -143,6 +146,50 @@ public class MedicationSetupFragment extends Fragment {
                 }
             }
         });
+        /**Updated code for medicine badges*/
+        /*save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.playSoundEffect(SoundEffectConstants.CLICK);
+                if (medicationName.getText().toString().equals("")) {
+                    ((MainActivity) getActivity()).setMessage("medicationError");
+                } *//*else if (medicationDosage.getText().toString().equals("")) {
+                    ((MainActivity) getActivity()).setMessage("medicationDoseError");
+                }*//* else if ((!newMedication && user.medicationCount(medicationName.getText().toString()) > 1)
+                        || (newMedication && user.medicationCount(medicationName.getText().toString()) > 0)) {
+                    ((MainActivity) getActivity()).setMessage("medicationDuplicateError");
+                } else if (medicationName.getText().toString().toLowerCase().contains("insulin")) {
+                    ((MainActivity) getActivity()).setMessage("medicationInsulinError");
+                } else {
+                    addMedicineNoTimesClass.medicationDialogue(medicationName.getText().toString());
+//                  medicationBundle.putString("oldMed", medication.getName());
+                    medication.setName(medicationName.getText().toString());
+                    *//*if (medicationDosage.getText().toString().equals("")) {
+                        medication.setDailyDoses(0);
+                    } else {*//*
+                        *//**medication.setDailyDoses(Integer.ParseInt(medicationDosage.getText().toString()));*//*
+                        medication.setDailyDoses(1);
+                        medicationBundle.putSerializable("med", medication);
+                        medicationBundle.putBoolean("newMed", newMedication);
+                        medicationBundle.putString("button", "save");
+                        onButtonPressed(medicationBundle);
+                   *//* }*//*
+//                    {
+                        *//*if (Integer.parseInt(medicationDosage.getText().toString())<1
+                            || Integer.parseInt(medicationDosage.getText().toString())>5){
+                            medicationDosage.setError("Invalid input");
+                        }
+                        else {
+                            medication.setDailyDoses(Integer.parseInt(medicationDosage.getText().toString()));*//*
+                        medicationBundle.putSerializable("med", medication);
+                        medicationBundle.putBoolean("newMed", newMedication);
+                        medicationBundle.putString("button", "save");
+                        onButtonPressed(medicationBundle);
+                        *//*}*//*
+//                    }
+                }
+            }
+        });*/
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -213,8 +213,8 @@ public class BloodSugarFragment extends Fragment {
     }
 
     public Bundle getLogData() {
-        /*
-        if (bloodSugar.getText().toString().equals("")) {
+
+        /*if (bloodSugar.getText().toString().equals("")) {
             Log.d("DEBUGGING", "no blood sugar entered");
             log.putBoolean("validInput", false);
             //Toast toast=Toast.makeText(getContext(),"Please enter a number for your blood sugar", Toast.LENGTH_LONG);

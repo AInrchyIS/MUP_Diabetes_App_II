@@ -41,6 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Before meal"
+                    android:checked="true"
                     android:textColor="@color/design_default_color_on_secondary"
                     android:textSize="18sp"
                     android:textStyle="bold" />

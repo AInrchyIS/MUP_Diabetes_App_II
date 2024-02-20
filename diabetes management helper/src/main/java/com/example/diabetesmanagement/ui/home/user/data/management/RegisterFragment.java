@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.diabetesmanagement.MainActivity;
 import com.example.diabetesmanagement.R;
@@ -96,6 +97,8 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Toast.makeText(requireContext(), "Hello", Toast.LENGTH_SHORT).show();
+        Log.d("egisterFragmentsClass", "onViewCreated: hello");
         nameField = view.findViewById(R.id.email);
         passField = view.findViewById(R.id.password);
         registerButton = view.findViewById(R.id.button_register);
@@ -108,7 +111,7 @@ public class RegisterFragment extends Fragment {
                 if(!nameField.getText().toString().equals("") &&
                     !passField.getText().toString().equals(""))
                 {
-                    username = nameField.getText().toString();
+                    username = nameField.getText().toString().trim();
                     password = passField.getText().toString();
 
                     if(password.length() < 8 || password.length() > 16)

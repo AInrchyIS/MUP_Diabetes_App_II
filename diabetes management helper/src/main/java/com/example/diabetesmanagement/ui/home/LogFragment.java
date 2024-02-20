@@ -34,6 +34,7 @@ public class LogFragment extends Fragment {
     private Goal snackGoal;
     private Goal weightGoal;
     private Goal moodGoal;
+    private Goal medicationGoal;
 
     private TextView weeklyA1cView;
     private TextView monthlyA1cView;
@@ -60,7 +61,7 @@ public class LogFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            user = (User)getArguments().getSerializable(ARG_PARAM1);
+            user = (User) getArguments().getSerializable(ARG_PARAM1);
         }
     }
 
@@ -85,16 +86,13 @@ public class LogFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         TextView lastBloodSugar = view.findViewById(R.id.text_lastBloodSugar);
-        if (user.getCurrentBloodSugar() != 0)
-        {
+        if (user.getCurrentBloodSugar() != 0) {
             lastBloodSugar.setText("The last blood sugar you entered was " + user.getCurrentBloodSugar() + ".");
-        }
-        else
+        } else
             lastBloodSugar.setVisibility(View.GONE);
 
         ArrayList<Goal> goals = user.getGoals();
-        for (Goal goal:goals)
-        {
+        for (Goal goal : goals) {
             if (goal.resetWeeklyYet(Calendar.getInstance().getTime()))
                 goal.resetWeekly();
             if (goal.resetDailyYet(Calendar.getInstance().getTime()))
@@ -103,10 +101,12 @@ public class LogFragment extends Fragment {
         activityGoal = user.getGoal(Goal.ACTIVITY);
         bloodSugarGoal = user.getGoal(Goal.BLOODSUGAR);
         insulinGoal = user.getGoal(Goal.INSULIN);
+//        medicationGoal = user.getGoal(Goal.MEDICINE);
         foodGoal = user.getGoal(Goal.FOODMEAL);
         snackGoal = user.getGoal(Goal.FOODSNACK);
         weightGoal = user.getGoal(Goal.WEIGHT);
         moodGoal = user.getGoal(Goal.MOOD);
+
 
         weeklyA1cView = view.findViewById(R.id.text_weeklyA1C);
         monthlyA1cView = view.findViewById(R.id.text_monthlyA1C);
@@ -132,6 +132,8 @@ public class LogFragment extends Fragment {
             weightView.setVisibility(View.GONE);
         if (!moodGoal.isActive())
             moodView.setVisibility(View.GONE);
+        /*if (!medicationGoal.isActive())
+            medicineView.setVisibility(View.GONE);*/
 
         String builder;
         if (user.getLogsBloodSugar().size() > 2) {
@@ -147,8 +149,7 @@ public class LogFragment extends Fragment {
             //if (a1c <= 7)
             //    builder += " That's at or below 7%! Good job!";
             monthlyA1cView.setText(builder);
-        }
-        else {
+        } else {
             //weeklyA1cView.setText("You don't have enough blood sugar logs for a good A1C reading.");
             //monthlyA1cView.setText("Try to record your blood sugar more often so you can track how you're doing!");
             weeklyA1cView.setVisibility(View.GONE);
@@ -157,11 +158,11 @@ public class LogFragment extends Fragment {
 
         if (activityGoal.weeklyGoalMet())
             activityView.setText("You've met your exercise goal for the week!  Great job!");
-        else if (activityGoal.getWeeklyProgress()/(double)activityGoal.getWeeklyAmount() >= 0.5 )
+        else if (activityGoal.getWeeklyProgress() / (double) activityGoal.getWeeklyAmount() >= 0.5)
             activityView.setText("You're more that halfway toward meeting your exercise goal for the week!  Keep it up!");
         else if (activityGoal.getWeeklyProgress() > 1)
-            activityView.setText("Good job on the " + activityGoal.getWeeklyProgress() +" minutes of exercise this week!");
-       else
+            activityView.setText("Good job on the " + activityGoal.getWeeklyProgress() + " minutes of exercise this week!");
+        else
             activityView.setVisibility(View.GONE);
 
         if (bloodSugarGoal.weeklyGoalMet())
@@ -171,21 +172,31 @@ public class LogFragment extends Fragment {
         else if (bloodSugarGoal.getWeeklyProgress() > 0)
             bloodSugarView.setText("Good job on the blood sugar entry this week!");
         else
-           bloodSugarView.setVisibility(View.GONE);
+            bloodSugarView.setVisibility(View.GONE);
 
         if (insulinGoal.weeklyGoalMet())
-           insulinView.setText("You've met your goal for recording insulin taken for the week!  Great job!");
+            insulinView.setText("You've met your goal for recording insulin taken for the week!  Great job!");
         else if (insulinGoal.getWeeklyProgress() > 1)
-           insulinView.setText("Good job on the " + insulinGoal.getWeeklyProgress() + " insulin entries this week!");
+            insulinView.setText("Good job on the " + insulinGoal.getWeeklyProgress() + " insulin entries this week!");
         else if (insulinGoal.getWeeklyProgress() > 0)
             insulinView.setText("Good job on the insulin entry this week!");
         else
             insulinView.setVisibility(View.GONE);
+        /**Medication*/
+       /* if (medicationGoal.weeklyGoalMet())
+            medicineView.setText("You've met your goal for recording insulin taken for the week!  Great job!");
+        else if (medicationGoal.getWeeklyProgress() > 1)
+            medicineView.setText("Good job on the " + medicationGoal.getWeeklyProgress() + " insulin entries this week!");
+        else if (medicationGoal.getWeeklyProgress() > 0)
+            medicineView.setText("Good job on the insulin entry this week!");
+        else
+            medicineView.setVisibility(View.GONE);*/
+        /**Medication*/
         //ArrayList<Goal> medGoals = new ArrayList<>();
         StringBuilder medString = new StringBuilder();
         Calendar cal = Calendar.getInstance();
-        for (Goal g: user.getGoals()){
-            if( g.getType().contains("Medication") && g.getDailyAmount() > 0) {
+        for (Goal g : user.getGoals()) {
+            if (g.getType().contains("Medication") && g.getDailyAmount() > 0) {
                 //medGoals.add(g);
                 medicineView.setVisibility(View.VISIBLE);
                 Medication m = user.getMedication(g.getType().substring(12));
@@ -194,22 +205,19 @@ public class LogFragment extends Fragment {
                         medString.append("You've taken your medication, ");
                         medString.append(m.getName());
                         medString.append(", every day this week! Great job! \n\n");
-                    }
-                    else if (g.getWeeklyProgress() > 1){
+                    } else if (g.getWeeklyProgress() > 1) {
                         medString.append("Good job taking all of your medication, ");
                         medString.append(m.getName());
                         medString.append(", on ");
                         medString.append(g.getWeeklyProgress());
                         medString.append(" days this week! \n\n");
-                    }
-                    else if (g.getWeeklyProgress() == 1){
+                    } else if (g.getWeeklyProgress() == 1) {
                         medString.append("Good job taking all of your medication, ");
                         medString.append(m.getName());
                         medString.append(", on ");
                         medString.append(g.getWeeklyProgress());
                         medString.append(" day this week! \n\n");
-                    }
-                    else {
+                    } else {
                         medString.append("Try to take your medication, ");
                         medString.append(m.getName());
                         medString.append(", every day, if you can.\n\n");
@@ -220,9 +228,9 @@ public class LogFragment extends Fragment {
         medicineView.setText(medString.toString().trim());
 
         if (foodGoal.getWeeklyProgress() >= cal.get(Calendar.DAY_OF_WEEK))
-           foodView.setText("You've met your meal goal every day this week!  Great job!");
+            foodView.setText("You've met your meal goal every day this week!  Great job!");
         else if (foodGoal.getWeeklyProgress() > 1)
-           foodView.setText("Good job on meeting your meal goal " + foodGoal.getWeeklyProgress() + " days this week!");
+            foodView.setText("Good job on meeting your meal goal " + foodGoal.getWeeklyProgress() + " days this week!");
         else
             foodView.setVisibility(View.GONE);
 
@@ -284,8 +292,7 @@ public class LogFragment extends Fragment {
         if (moodView.getVisibility() == View.GONE)
             numGone++;
 
-        if (numGone > 5)
-        {
+        if (numGone > 5) {
             TextView noFeedback = view.findViewById(R.id.text_no_feedback);
             noFeedback.setText("Make sure to start entering logs so you can get feedback on how you're doing!");
             noFeedback.setVisibility(View.VISIBLE);

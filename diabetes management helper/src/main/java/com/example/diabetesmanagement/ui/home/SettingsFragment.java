@@ -1,5 +1,6 @@
 package com.example.diabetesmanagement.ui.home;
 
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Dialog;
@@ -7,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,6 +36,10 @@ import com.example.diabetesmanagement.constatntClass.ConstantClass;
 import com.example.diabetesmanagement.data.User;
 import com.example.diabetesmanagement.service.FirestoreCallback;
 import com.example.diabetesmanagement.service.UserStorage;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SettingsFragment extends Fragment {
 
@@ -41,7 +47,7 @@ public class SettingsFragment extends Fragment {
     private SettingsViewModel mViewModel;
     ImageView bdge1, bdge2, bdge3, bdge4, bdge5, bdge6, bdge7;
     public int badgeIncrement = 1;
-
+    TextView memberShipTV;
     private SettingsFragment.OnFragmentInteractionListener mListener;
 
     private Bundle bundle;
@@ -116,6 +122,7 @@ public class SettingsFragment extends Fragment {
         bdge5 = view.findViewById(R.id.badge_iv5_id);
         bdge6 = view.findViewById(R.id.badge_iv6_id);
         bdge7 = view.findViewById(R.id.badge_iv7_id);
+        memberShipTV = view.findViewById(R.id.memberShipTV);
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("counterText", 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         int counterTextIncrement = sharedPreferences.getInt(ConstantClass.counterIncrement, 0);
@@ -124,7 +131,34 @@ public class SettingsFragment extends Fragment {
         editor.putInt(ConstantClass.badgeIncrement, badgeIncrement);
         editor.apply();
         //Log.d(TAG, "onViewCCheck Values  "+"Counter Text: " + counterTextIncrement + "Badge Increment: "+badgeIncrement);
-
+        /**Get Badges Value from Firebase*/
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseFirestore.getInstance().collection("users")
+                .document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                try {
+                    User userData = documentSnapshot.toObject(User.class);
+                    assert userData != null;
+                    if ((userData.getBadges() >= 5) && (userData.getBadges() <= 14)) {
+                        memberShipTV.setText("Membership: Warrior Club\n(Level 1)");
+                    } else if (userData.getBadges() >= 15 && userData.getBadges() <= 29) {
+                        memberShipTV.setText("Membership: Captaincy Club\n(Level 2)");
+                    } else if (userData.getBadges() >= 30 && userData.getBadges() <= 49) {
+                        memberShipTV.setText("Membership: Governor Club\n(Level 3)");
+                    } else if (userData.getBadges() >= 50 && userData.getBadges() <= 74) {
+                        memberShipTV.setText("Membership: Presidency Club\n(Level 4)");
+                    } else if (userData.getBadges() >= 75) {
+                        memberShipTV.setText("Membership: Elite Club\n(Level 5)");
+                    } else {
+                        memberShipTV.setText("Membership: No Club");
+                    }
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
         UserStorage.readUser(new FirestoreCallback() {
             @Override
             public void onCallback(User user) {
@@ -181,8 +215,6 @@ public class SettingsFragment extends Fragment {
             }
         });
     }
-
-
 
 
     // TODO: Rename method, update argument and hook method into UI event

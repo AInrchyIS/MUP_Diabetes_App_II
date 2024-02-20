@@ -25,6 +25,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.diabetesmanagement.constatntClass.ConstantClass;
 //import com.example.diabetesmanagement.constatntClass.ProductionModelClass;
+import com.example.diabetesmanagement.constatntClass.DisclaimerClass;
+import com.example.diabetesmanagement.constatntClass.SharedPreferenceClass;
 import com.example.diabetesmanagement.data.Goal;
 import com.example.diabetesmanagement.data.GoalReminder;
 import com.example.diabetesmanagement.data.LogActivity;
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements
         ResourceFragment.OnFragmentInteractionListener, LevelFragment.OnFragmentInteractionListener {
 
 
-    private static final String TAG = "Main Activity";
+    private static final String TAG = "MainActivityClass";
     //private UserStorage storage;
     private TextView buddyMessage;
     private ImageView buddyIcon;
@@ -108,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements
     public final static int BLOOD_SUGAR_CUTOFF = 5; //how many weeks of blood sugar logs to keep saved to user file versus archiving separately
     public final static int LOG_CUTOFF = 2; // how weeks of non blood sugar logs to keep saved to user file
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +119,8 @@ public class MainActivity extends AppCompatActivity implements
                 .setTimestampsInSnapshotsEnabled(true)
                 .build();
         firestore.setFirestoreSettings(settings);
+
+
         sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
         if (sharedPref.getBoolean("tts", true))
@@ -232,9 +235,9 @@ public class MainActivity extends AppCompatActivity implements
         //editor = sharedPref.edit();
         //Log.d("LOGINCHECK", "Opened editor");
 
-
         final FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
         if (fUser == null) {
+
             //No user signed in
             Log.d("FBDEBUG", "onResume: Firebase user null, start login");
             Intent intent = new Intent(MainActivity.this, FirebaseAuthActivity.class);
@@ -759,280 +762,291 @@ public class MainActivity extends AppCompatActivity implements
                                         .document(user.getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            User userData = documentSnapshot.toObject(User.class);
-                                            boolean inputSuccess = false;
-                                            String type = bundle.getString("type");
-                                            // looks up the fragment contained within the base log entry fragment, since it contains the type-specific data
-                                            Fragment fragment = getSupportFragmentManager().findFragmentByTag("logEntry").getChildFragmentManager().findFragmentByTag(type);
+                                        User userData = documentSnapshot.toObject(User.class);
+                                        boolean inputSuccess = false;
+                                        String type = bundle.getString("type");
+                                        // looks up the fragment contained within the base log entry fragment, since it contains the type-specific data
+                                        Fragment fragment = getSupportFragmentManager().findFragmentByTag("logEntry").getChildFragmentManager().findFragmentByTag(type);
 
-                                            Calendar cal = Calendar.getInstance();
-                                            cal.set(bundle.getInt("year"), bundle.getInt("month"), bundle.getInt("day"),
-                                                    bundle.getInt("hour"), bundle.getInt("minute"));
-                                            Date c = cal.getTime();
-                                            Log.d("LOGTYPE", type);
+                                        Calendar cal = Calendar.getInstance();
+                                        cal.set(bundle.getInt("year"), bundle.getInt("month"), bundle.getInt("day"),
+                                                bundle.getInt("hour"), bundle.getInt("minute"));
+                                        Date c = cal.getTime();
+                                        Log.d("LOGTYPE", type);
 
-                                            switch (type) {
-                                                case "bloodSugar":
-                                                    //put all the type-specific data into the main log entry bundle
-                                                    bundle.putAll(((BloodSugarFragment) fragment).getLogData());
-                                                    if (bundle.getBoolean("validInput")) {
-                                                        newLog[0] = new LogBloodSugar();
-                                                        newLog[0].setUserID(user.getId());
-                                                        newLog[0].setDateTime(c);
-                                                        //get the type specific data
-                                                        ((LogBloodSugar) newLog[0]).setBloodSugar(bundle.getInt("bloodSugar"));
-                                                        ((LogBloodSugar) newLog[0]).setBeforeMeal(bundle.getBoolean("beforeMeal"));
-                                                        ((LogBloodSugar) newLog[0]).setAfterMeal(bundle.getBoolean("afterMeal"));
-                                                        ((LogBloodSugar) newLog[0]).setBeforeBed(bundle.getBoolean("beforeBed"));
-                                                        Log.d("DEBUGGING", "Blood sugar: " + ((LogBloodSugar) newLog[0]).getBloodSugar() +
-                                                                "before/after/before: " + ((LogBloodSugar) newLog[0]).isBeforeMeal()
-                                                                + " " + ((LogBloodSugar) newLog[0]).isAfterMeal()
-                                                                + " " + ((LogBloodSugar) newLog[0]).isBeforeBed());
-                                                        user.setCurrentBloodSugar(bundle.getInt("bloodSugar"));
-                                                        getSupportFragmentManager().beginTransaction()
-                                                                .replace(R.id.main_fragment, HomeFragment.newInstance(user))
-                                                                .commitNow();
-                                                        inputSuccess = true;
-                                                        if (user.getCurrentBloodSugar() > 180 || user.getCurrentBloodSugar() < 70) {
-                                                            AlertFragment alert = new AlertFragment(user.getCurrentBloodSugar());
-                                                            alert.show(getSupportFragmentManager(), "bloodsugaralert");
-                                                        }
+                                        switch (type) {
+                                            case "bloodSugar":
+                                                //put all the type-specific data into the main log entry bundle
+                                                bundle.putAll(((BloodSugarFragment) fragment).getLogData());
+                                                if (bundle.getBoolean("validInput")) {
+                                                    newLog[0] = new LogBloodSugar();
+                                                    newLog[0].setUserID(user.getId());
+                                                    newLog[0].setDateTime(c);
+                                                    //get the type specific data
+                                                    ((LogBloodSugar) newLog[0]).setBloodSugar(bundle.getInt("bloodSugar"));
+                                                    ((LogBloodSugar) newLog[0]).setBeforeMeal(bundle.getBoolean("beforeMeal"));
+                                                    ((LogBloodSugar) newLog[0]).setAfterMeal(bundle.getBoolean("afterMeal"));
+                                                    ((LogBloodSugar) newLog[0]).setBeforeBed(bundle.getBoolean("beforeBed"));
+                                                    Log.d("DEBUGGING", "Blood sugar: " + ((LogBloodSugar) newLog[0]).getBloodSugar() +
+                                                            "before/after/before: " + ((LogBloodSugar) newLog[0]).isBeforeMeal()
+                                                            + " " + ((LogBloodSugar) newLog[0]).isAfterMeal()
+                                                            + " " + ((LogBloodSugar) newLog[0]).isBeforeBed());
+                                                    user.setCurrentBloodSugar(bundle.getInt("bloodSugar"));
+                                                    getSupportFragmentManager().beginTransaction()
+                                                            .replace(R.id.main_fragment, HomeFragment.newInstance(user))
+                                                            .commitNow();
+                                                    inputSuccess = true;
+                                                    if (user.getCurrentBloodSugar() > 180 || user.getCurrentBloodSugar() < 70) {
+                                                        AlertFragment alert = new AlertFragment(user.getCurrentBloodSugar());
+                                                        alert.show(getSupportFragmentManager(), "bloodsugaralert");
                                                     }
-                                                    break;
-                                                case "insulin":
-                                                    bundle.putAll(((InsulinFragment) fragment).getLogData());
-                                                    if (bundle.getBoolean("validInput")) {
-                                                        newLog[0] = new LogInsulin();
-                                                        newLog[0].setUserID(user.getId());
-                                                        newLog[0].setDateTime(c);
-                                                        //get the type specific data
-                                                        ((LogInsulin) newLog[0]).setAmount(bundle.getInt("insulin"));
-                                                        //((LogInsulin) newLog).setFood(bundle.getBoolean("food"));
-                                                        //((LogInsulin) newLog).setCorrective(bundle.getBoolean("corrective"));
-                                                        ((LogInsulin) newLog[0]).setType(bundle.getString("insulinType"));
-                                                        Log.d("DEBUGGING", "Insulin: " + ((LogInsulin) newLog[0]).getAmount() +
-                                                                //" food/corrective/type: " + ((LogInsulin) newLog).isFood()
-                                                                //+ " " + ((LogInsulin) newLog).isCorrective()
-                                                                " " + ((LogInsulin) newLog[0]).getType());
-                                                        getSupportFragmentManager().beginTransaction()
-                                                                .replace(R.id.main_fragment, HomeFragment.newInstance(user))
-                                                                .commitNow();
-                                                        inputSuccess = true;
-                                                    }
-                                                    break;
-                                                case "medicine":
-                                                    bundle.putAll(((MedicineFragment) fragment).getLogData());
-                                                    if (bundle.getBoolean("validInput")) {
-                                                        newLog[0] = new LogMedication();
-                                                        newLog[0].setUserID(user.getId());
-                                                        newLog[0].setDateTime(c);
-                                                        //get the type specific data
-                                                        ((LogMedication) newLog[0]).setMedication(user.getMedication(bundle.getString("medication")));
-                                                        Log.d("DEBUGGING", "Med: " + ((LogMedication) newLog[0]).getMedication().getName());
-                                                        getSupportFragmentManager().beginTransaction()
-                                                                .replace(R.id.main_fragment, HomeFragment.newInstance(user))
-                                                                .commitNow();
-                                                        inputSuccess = true;
-                                                    }
-                                                    break;
-                                                case "food":
-                                                    bundle.putAll(((FoodFragment) fragment).getLogData());
-                                                    if (bundle.getBoolean("validInput")) {
-                                                        newLog[0] = new LogFood();
-                                                        newLog[0].setUserID(user.getId());
-                                                        newLog[0].setDateTime(c);
-                                                        //get the type specific data
-                                                        ((LogFood) newLog[0]).setItemsEaten(bundle.getString("itemsEaten"));
-                                                        ((LogFood) newLog[0]).setMeal(bundle.getBoolean("meal"));
-                                                        ((LogFood) newLog[0]).setSnack(bundle.getBoolean("snack"));
+                                                }
+                                                break;
+                                            case "insulin":
+                                                bundle.putAll(((InsulinFragment) fragment).getLogData());
+                                                if (bundle.getBoolean("validInput")) {
+                                                    newLog[0] = new LogInsulin();
+                                                    newLog[0].setUserID(user.getId());
+                                                    newLog[0].setDateTime(c);
+                                                    //get the type specific data
+                                                    ((LogInsulin) newLog[0]).setAmount(bundle.getInt("insulin"));
+                                                    //((LogInsulin) newLog).setFood(bundle.getBoolean("food"));
+                                                    //((LogInsulin) newLog).setCorrective(bundle.getBoolean("corrective"));
+                                                    ((LogInsulin) newLog[0]).setType(bundle.getString("insulinType"));
+                                                    Log.d("DEBUGGING", "Insulin: " + ((LogInsulin) newLog[0]).getAmount() +
+                                                            //" food/corrective/type: " + ((LogInsulin) newLog).isFood()
+                                                            //+ " " + ((LogInsulin) newLog).isCorrective()
+                                                            " " + ((LogInsulin) newLog[0]).getType());
+                                                    getSupportFragmentManager().beginTransaction()
+                                                            .replace(R.id.main_fragment, HomeFragment.newInstance(user))
+                                                            .commitNow();
+                                                    inputSuccess = true;
+                                                }
+                                                break;
+                                            case "medicine":
+                                                bundle.putAll(((MedicineFragment) fragment).getLogData());
+                                                if (bundle.getBoolean("validInput")) {
+                                                    newLog[0] = new LogMedication();
+                                                    newLog[0].setUserID(user.getId());
+                                                    newLog[0].setDateTime(c);
+                                                    //get the type specific data
+                                                    ((LogMedication) newLog[0]).setMedication(user.getMedication(bundle.getString("medication")));
+                                                    Log.d("DEBUGGING", "Med: " + ((LogMedication) newLog[0]).getMedication().getName());
+                                                    getSupportFragmentManager().beginTransaction()
+                                                            .replace(R.id.main_fragment, HomeFragment.newInstance(user))
+                                                            .commitNow();
+                                                    inputSuccess = true;
+                                                }
+                                                break;
+                                            case "food":
+                                                bundle.putAll(((FoodFragment) fragment).getLogData());
+                                                if (bundle.getBoolean("validInput")) {
+                                                    newLog[0] = new LogFood();
+                                                    newLog[0].setUserID(user.getId());
+                                                    newLog[0].setDateTime(c);
+                                                    //get the type specific data
+                                                    ((LogFood) newLog[0]).setItemsEaten(bundle.getString("itemsEaten"));
+                                                    ((LogFood) newLog[0]).setMeal(bundle.getBoolean("meal"));
+                                                    ((LogFood) newLog[0]).setSnack(bundle.getBoolean("snack"));
 
-                                                        //Log.d("DEBUGGING","Food: " + ((LogFood) newLog).getCarbs() +
-                                                        //        " items eaten: " + ((LogFood) newLog).getItemsEaten());
-                                                        getSupportFragmentManager().beginTransaction()
-                                                                .replace(R.id.main_fragment, HomeFragment.newInstance(user))
-                                                                .commitNow();
-                                                        inputSuccess = true;
-                                                    }
-                                                    break;
-                                                case "activity":
-                                                    bundle.putAll(((ActivityFragment) fragment).getLogData());
-                                                    if (bundle.getInt("minutesActivity" )< (user.getGoal(Goal.ACTIVITY).getDailyAmount())){
-                                                        ActivityAlertFragment alert = new ActivityAlertFragment();
-                                                        alert.show(getSupportFragmentManager(), "Activityalert");
-                                                    }
-                                                    else {
-                                                        newLog[0] = new LogActivity();
-                                                        newLog[0].setUserID(user.getId());
-                                                        newLog[0].setDateTime(c);
-                                                        //get the type specific data1
-                                                        ((LogActivity) newLog[0]).setDuration(bundle.getInt("minutesActivity"));
-                                                        ((LogActivity) newLog[0]).setDescription(bundle.getString("activityDesc"));
-                                                        Log.d("DEBUGGING", "Duration: " + ((LogActivity) newLog[0]).getDuration()
-                                                                + " Desc: " + ((LogActivity) newLog[0]).getDescription());
-                                                        getSupportFragmentManager().beginTransaction()
-                                                                .replace(R.id.main_fragment, HomeFragment.newInstance(user))
-                                                                .commitNow();
-                                                        inputSuccess = true;
-                                                    }
-                                                    break;
-                                                case "weight":
-                                                    bundle.putAll(((WeightFragment) fragment).getLogData());
-                                                    if (bundle.getBoolean("validInput")) {
-                                                        newLog[0] = new LogWeight();
-                                                        newLog[0].setUserID(user.getId());
-                                                        newLog[0].setDateTime(c);
-                                                        //get the type specific data
-                                                        ((LogWeight) newLog[0]).setWeight(bundle.getInt("weight"));
-                                                        user.setWeight(bundle.getInt("weight"));
-                                                        Log.d("DEBUGGING", "Weight: " + ((LogWeight) newLog[0]).getWeight());
-                                                        getSupportFragmentManager().beginTransaction()
-                                                                .replace(R.id.main_fragment, HomeFragment.newInstance(user))
-                                                                .commitNow();
-                                                        inputSuccess = true;
-                                                    }
-                                                    break;
-                                                case "mood":
-                                                    bundle.putAll(((MoodFragment) fragment).getLogData());
-                                                    if (bundle.getBoolean("validInput")) {
-                                                        newLog[0] = new LogMood();
-                                                        newLog[0].setUserID(user.getId());
-                                                        newLog[0].setDateTime(c);
-                                                        //get the type specific data
-                                                        ((LogMood) newLog[0]).setMood(bundle.getString("mood"));
-                                                        Log.d("DEBUGGING", "mood: " + ((LogMood) newLog[0]).getMood());
-                                                        getSupportFragmentManager().beginTransaction()
-                                                                .replace(R.id.main_fragment, HomeFragment.newInstance(user))
-                                                                .commitNow();
-                                                        inputSuccess = true;
-                                                    }
-                                                    break;
+                                                    //Log.d("DEBUGGING","Food: " + ((LogFood) newLog).getCarbs() +
+                                                    //        " items eaten: " + ((LogFood) newLog).getItemsEaten());
+                                                    getSupportFragmentManager().beginTransaction()
+                                                            .replace(R.id.main_fragment, HomeFragment.newInstance(user))
+                                                            .commitNow();
+                                                    inputSuccess = true;
+                                                }
+                                                break;
+                                            case "activity":
+                                                bundle.putAll(((ActivityFragment) fragment).getLogData());
+                                                if (bundle.getInt("minutesActivity") < (user.getGoal(Goal.ACTIVITY).getDailyAmount())) {
+                                                    ActivityAlertFragment alert = new ActivityAlertFragment();
+                                                    alert.show(getSupportFragmentManager(), "Activityalert");
+                                                } else {
+                                                    newLog[0] = new LogActivity();
+                                                    newLog[0].setUserID(user.getId());
+                                                    newLog[0].setDateTime(c);
+                                                    //get the type specific data1
+                                                    ((LogActivity) newLog[0]).setDuration(bundle.getInt("minutesActivity"));
+                                                    ((LogActivity) newLog[0]).setDescription(bundle.getString("activityDesc"));
+                                                    Log.d("DEBUGGING", "Duration: " + ((LogActivity) newLog[0]).getDuration()
+                                                            + " Desc: " + ((LogActivity) newLog[0]).getDescription());
+                                                    getSupportFragmentManager().beginTransaction()
+                                                            .replace(R.id.main_fragment, HomeFragment.newInstance(user))
+                                                            .commitNow();
+                                                    inputSuccess = true;
+                                                }
+                                                break;
+                                            case "weight":
+                                                bundle.putAll(((WeightFragment) fragment).getLogData());
+                                                if (bundle.getBoolean("validInput")) {
+                                                    newLog[0] = new LogWeight();
+                                                    newLog[0].setUserID(user.getId());
+                                                    newLog[0].setDateTime(c);
+                                                    //get the type specific data
+                                                    ((LogWeight) newLog[0]).setWeight(bundle.getInt("weight"));
+                                                    user.setWeight(bundle.getInt("weight"));
+                                                    Log.d("DEBUGGING", "Weight: " + ((LogWeight) newLog[0]).getWeight());
+                                                    getSupportFragmentManager().beginTransaction()
+                                                            .replace(R.id.main_fragment, HomeFragment.newInstance(user))
+                                                            .commitNow();
+                                                    inputSuccess = true;
+                                                }
+                                                break;
+                                            case "mood":
+                                                bundle.putAll(((MoodFragment) fragment).getLogData());
+                                                if (bundle.getBoolean("validInput")) {
+                                                    newLog[0] = new LogMood();
+                                                    newLog[0].setUserID(user.getId());
+                                                    newLog[0].setDateTime(c);
+                                                    //get the type specific data
+                                                    ((LogMood) newLog[0]).setMood(bundle.getString("mood"));
+                                                    Log.d("DEBUGGING", "mood: " + ((LogMood) newLog[0]).getMood());
+                                                    getSupportFragmentManager().beginTransaction()
+                                                            .replace(R.id.main_fragment, HomeFragment.newInstance(user))
+                                                            .commitNow();
+                                                    inputSuccess = true;
+                                                }
+                                                break;
 
+                                        }
+
+                                        if (inputSuccess) {
+                                            newLog[0].setDateTimeEntered(Calendar.getInstance().getTime());
+                                            Goal g;
+                                            ArrayList<Goal> goals = user.getGoals();
+                                            for (Goal goal : goals) {
+                                                if (goal.resetWeeklyYet(Calendar.getInstance().getTime()))
+                                                    goal.resetWeekly();
+                                                if (goal.resetDailyYet(Calendar.getInstance().getTime()))
+                                                    goal.resetDaily();
                                             }
+                                            Calendar today = Calendar.getInstance();
+                                            Calendar thisWeek = Calendar.getInstance();
+                                            today.set(Calendar.HOUR_OF_DAY, 0);
+                                            today.set(Calendar.MINUTE, 0);
+                                            today.set(Calendar.MILLISECOND, 0);
+                                            today.add(Calendar.MILLISECOND, -1);
+                                            thisWeek.set(Calendar.HOUR_OF_DAY, 0);
+                                            thisWeek.set(Calendar.MINUTE, 0);
+                                            thisWeek.set(Calendar.MILLISECOND, 0);
+                                            while (thisWeek.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
+                                                thisWeek.add(Calendar.DATE, -1);
+                                            thisWeek.add(Calendar.MILLISECOND, -1);
+                                            switch (newLog[0].logType()) {
+                                                case "Activity":
+                                                    user.addLogActivity((LogActivity) newLog[0]);
+                                                    int minutes = ((LogActivity) newLog[0]).getDuration();
+                                                    g = user.getGoal(Goal.ACTIVITY);
+                                                    boolean dailyMet = g.dailyGoalMet();
+                                                    boolean weeklyMet = g.weeklyGoalMet();
+                                                    if (today.getTimeInMillis() < newLog[0].getDateTime().getTime())
+                                                        g.addDailyProgress(minutes);
+                                                    if (thisWeek.getTimeInMillis() < newLog[0].getDateTime().getTime())
+                                                        g.addWeeklyProgress(minutes);
+                                                    if (!dailyMet && g.dailyGoalMet())
+                                                        GoalReminder.showDailyGoalMet(getApplicationContext(), g);
+                                                    if (!weeklyMet && g.weeklyGoalMet())
+                                                        GoalReminder.showWeeklyGoalMet(getApplicationContext(), g);
 
-                                            if (inputSuccess) {
-                                                newLog[0].setDateTimeEntered(Calendar.getInstance().getTime());
-                                                Goal g;
-                                                ArrayList<Goal> goals = user.getGoals();
-                                                for (Goal goal : goals) {
-                                                    if (goal.resetWeeklyYet(Calendar.getInstance().getTime()))
-                                                        goal.resetWeekly();
-                                                    if (goal.resetDailyYet(Calendar.getInstance().getTime()))
-                                                        goal.resetDaily();
-                                                }
-                                                Calendar today = Calendar.getInstance();
-                                                Calendar thisWeek = Calendar.getInstance();
-                                                today.set(Calendar.HOUR_OF_DAY, 0);
-                                                today.set(Calendar.MINUTE, 0);
-                                                today.set(Calendar.MILLISECOND, 0);
-                                                today.add(Calendar.MILLISECOND, -1);
-                                                thisWeek.set(Calendar.HOUR_OF_DAY, 0);
-                                                thisWeek.set(Calendar.MINUTE, 0);
-                                                thisWeek.set(Calendar.MILLISECOND, 0);
-                                                while (thisWeek.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
-                                                    thisWeek.add(Calendar.DATE, -1);
-                                                thisWeek.add(Calendar.MILLISECOND, -1);
-                                                switch (newLog[0].logType()) {
-                                                    case "Activity":
-                                                        user.addLogActivity((LogActivity) newLog[0]);
-                                                        int minutes = ((LogActivity) newLog[0]).getDuration();
-                                                        g = user.getGoal(Goal.ACTIVITY);
-                                                        boolean dailyMet = g.dailyGoalMet();
-                                                        boolean weeklyMet = g.weeklyGoalMet();
+                                                    Log.d("GOALMET", "oldDailyMet: " + dailyMet
+                                                            + " oldWeeklyMet: " + weeklyMet + " nowDailyMet: "
+                                                            + g.dailyGoalMet() + " nowWeeklyMet " + g.weeklyGoalMet());
+                                                    break;
+                                                case "BloodSugar":
+                                                    user.addLogBloodSugar((LogBloodSugar) newLog[0]);
+                                                    g = user.getGoal(Goal.BLOODSUGAR);
+                                                    if (today.getTimeInMillis() < newLog[0].getDateTime().getTime())
+                                                        g.addDailyProgress(1);
+                                                    if (thisWeek.getTimeInMillis() < newLog[0].getDateTime().getTime())
+                                                        g.addWeeklyProgress(1);
+                                                    GoalReminder.showDailyGoalMet(getApplicationContext(), g);
+                                                    GoalReminder.showWeeklyGoalMet(getApplicationContext(), g);
+                                                    break;
+                                                case "Insulin":
+                                                    user.addLogInsulin((LogInsulin) newLog[0]);
+                                                    g = user.getGoal(Goal.INSULIN);
+                                                    if (today.getTimeInMillis() < newLog[0].getDateTime().getTime())
+                                                        g.addDailyProgress(1);
+                                                    if (thisWeek.getTimeInMillis() < newLog[0].getDateTime().getTime())
+                                                        g.addWeeklyProgress(1);
+                                                    GoalReminder.showDailyGoalMet(getApplicationContext(), g);
+                                                    GoalReminder.showWeeklyGoalMet(getApplicationContext(), g);
+                                                    break;
+                                                case "Food":
+                                                    user.addLogFood((LogFood) newLog[0]);
+                                                    if (((LogFood) newLog[0]).isMeal()) {
+                                                        g = user.getGoal(Goal.FOODMEAL);
+                                                        boolean alreadyMet = g.dailyGoalMet();
                                                         if (today.getTimeInMillis() < newLog[0].getDateTime().getTime())
-                                                            g.addDailyProgress(minutes);
-                                                        if (thisWeek.getTimeInMillis() < newLog[0].getDateTime().getTime())
-                                                            g.addWeeklyProgress(minutes);
-                                                        if (!dailyMet && g.dailyGoalMet())
-                                                            GoalReminder.showDailyGoalMet(getApplicationContext(), g);
-                                                        if (!weeklyMet && g.weeklyGoalMet())
-                                                            GoalReminder.showWeeklyGoalMet(getApplicationContext(), g);
+                                                            g.setMealsEaten(g.getMealsEaten() + 1);
+                                                        GoalReminder.showDailyGoalMet(getApplicationContext(), g);
+                                                        if (g.dailyGoalMet() && !alreadyMet)
+                                                            g.setWeeklyProgress(g.getWeeklyProgress() + 1);
+                                                    }
+                                                    if (((LogFood) newLog[0]).isSnack()) {
+                                                        g = user.getGoal(Goal.FOODSNACK);
+                                                        boolean alreadyMet = g.dailyGoalMet();
+                                                        if (today.getTimeInMillis() < newLog[0].getDateTime().getTime())
+                                                            g.setSnacksEaten(g.getSnacksEaten() + 1);
+                                                        GoalReminder.showDailyGoalMet(getApplicationContext(), g);
+                                                        if (g.dailyGoalMet() && !alreadyMet)
+                                                            g.setWeeklyProgress(g.getWeeklyProgress() + 1);
+                                                    }
 
-                                                        Log.d("GOALMET", "oldDailyMet: " + dailyMet
-                                                                + " oldWeeklyMet: " + weeklyMet + " nowDailyMet: "
-                                                                + g.dailyGoalMet() + " nowWeeklyMet " + g.weeklyGoalMet());
-                                                        break;
-                                                    case "BloodSugar":
-                                                        user.addLogBloodSugar((LogBloodSugar) newLog[0]);
-                                                        g = user.getGoal(Goal.BLOODSUGAR);
-                                                        if (today.getTimeInMillis() < newLog[0].getDateTime().getTime())
-                                                            g.addDailyProgress(1);
-                                                        if (thisWeek.getTimeInMillis() < newLog[0].getDateTime().getTime())
-                                                            g.addWeeklyProgress(1);
-                                                        GoalReminder.showDailyGoalMet(getApplicationContext(), g);
-                                                        GoalReminder.showWeeklyGoalMet(getApplicationContext(), g);
-                                                        break;
-                                                    case "Insulin":
-                                                        user.addLogInsulin((LogInsulin) newLog[0]);
-                                                        g = user.getGoal(Goal.INSULIN);
-                                                        if (today.getTimeInMillis() < newLog[0].getDateTime().getTime())
-                                                            g.addDailyProgress(1);
-                                                        if (thisWeek.getTimeInMillis() < newLog[0].getDateTime().getTime())
-                                                            g.addWeeklyProgress(1);
-                                                        GoalReminder.showDailyGoalMet(getApplicationContext(), g);
-                                                        GoalReminder.showWeeklyGoalMet(getApplicationContext(), g);
-                                                        break;
-                                                    case "Food":
-                                                        user.addLogFood((LogFood) newLog[0]);
-                                                        if (((LogFood) newLog[0]).isMeal()) {
-                                                            g = user.getGoal(Goal.FOODMEAL);
-                                                            boolean alreadyMet = g.dailyGoalMet();
-                                                            if (today.getTimeInMillis() < newLog[0].getDateTime().getTime())
-                                                                g.setMealsEaten(g.getMealsEaten() + 1);
-                                                            GoalReminder.showDailyGoalMet(getApplicationContext(), g);
-                                                            if (g.dailyGoalMet() && !alreadyMet)
-                                                                g.setWeeklyProgress(g.getWeeklyProgress() + 1);
-                                                        }
-                                                        if (((LogFood) newLog[0]).isSnack()) {
-                                                            g = user.getGoal(Goal.FOODSNACK);
-                                                            boolean alreadyMet = g.dailyGoalMet();
-                                                            if (today.getTimeInMillis() < newLog[0].getDateTime().getTime())
-                                                                g.setSnacksEaten(g.getSnacksEaten() + 1);
-                                                            GoalReminder.showDailyGoalMet(getApplicationContext(), g);
-                                                            if (g.dailyGoalMet() && !alreadyMet)
-                                                                g.setWeeklyProgress(g.getWeeklyProgress() + 1);
-                                                        }
-
-                                                        break;
-                                                    case "Weight":
-                                                        user.addLogWeight((LogWeight) newLog[0]);
-                                                        g = user.getGoal(Goal.WEIGHT);
-                                                        if (today.getTimeInMillis() < newLog[0].getDateTime().getTime())
-                                                            g.addDailyProgress(1);
-                                                        if (thisWeek.getTimeInMillis() < newLog[0].getDateTime().getTime())
-                                                            g.addWeeklyProgress(1);
-                                                        GoalReminder.showDailyGoalMet(getApplicationContext(), g);
-                                                        GoalReminder.showWeeklyGoalMet(getApplicationContext(), g);
-                                                        break;
-                                                    case "Mood":
-                                                        user.addLogMood((LogMood) newLog[0]);
-                                                        g = user.getGoal(Goal.MOOD);
-                                                        if (today.getTimeInMillis() < newLog[0].getDateTime().getTime())
-                                                            g.addDailyProgress(1);
-                                                        if (thisWeek.getTimeInMillis() < newLog[0].getDateTime().getTime())
-                                                            g.addWeeklyProgress(1);
-                                                        GoalReminder.showDailyGoalMet(getApplicationContext(), g);
-                                                        GoalReminder.showWeeklyGoalMet(getApplicationContext(), g);
-                                                        break;
-                                                }
-                                                if (newLog[0].logType().equals("Medication")) {
+                                                    break;
+                                                case "Weight":
+                                                    user.addLogWeight((LogWeight) newLog[0]);
+                                                    g = user.getGoal(Goal.WEIGHT);
+                                                    if (today.getTimeInMillis() < newLog[0].getDateTime().getTime())
+                                                        g.addDailyProgress(1);
+                                                    if (thisWeek.getTimeInMillis() < newLog[0].getDateTime().getTime())
+                                                        g.addWeeklyProgress(1);
+                                                    GoalReminder.showDailyGoalMet(getApplicationContext(), g);
+                                                    GoalReminder.showWeeklyGoalMet(getApplicationContext(), g);
+                                                    break;
+                                                case "Mood":
+                                                    user.addLogMood((LogMood) newLog[0]);
+                                                    g = user.getGoal(Goal.MOOD);
+                                                    if (today.getTimeInMillis() < newLog[0].getDateTime().getTime())
+                                                        g.addDailyProgress(1);
+                                                    if (thisWeek.getTimeInMillis() < newLog[0].getDateTime().getTime())
+                                                        g.addWeeklyProgress(1);
+                                                    GoalReminder.showDailyGoalMet(getApplicationContext(), g);
+                                                    GoalReminder.showWeeklyGoalMet(getApplicationContext(), g);
+                                                    break;
+                                                /*case "Medication":
                                                     user.addLogMedication((LogMedication) newLog[0]);
                                                     Medication m = ((LogMedication) newLog[0]).getMedication();
-                                                    g = user.getGoal("Medication: " + m.getName());
+                                                    g = user.getGoal(Goal.MEDICINE);
+                                                    Log.d(TAG, "Medication OnSuccess: "+g.getType());
                                                     boolean alreadyMet = g.dailyGoalMet();
                                                     if (today.getTimeInMillis() < newLog[0].getDateTime().getTime())
                                                         g.addDailyProgress(1);
                                                     GoalReminder.showDailyGoalMet(getApplicationContext(), g);
                                                     if (g.dailyGoalMet() && !alreadyMet)
-                                                        g.addWeeklyProgress(1);
-                                                }
-                                                Log.d("DEBUGGING", user.toString());
-                                                setMessage("logAdded");
-                                                UserStorage.saveUser(user);
-                                                UserStorage.storeActivity(UserStorage.LOG);
+                                                        g.addWeeklyProgress(1);*/
                                             }
-                                            //wrote l code here
-
+                                            if (newLog[0].logType().equals("Medication")) {
+                                                user.addLogMedication((LogMedication) newLog[0]);
+                                                Medication m = ((LogMedication) newLog[0]).getMedication();
+                                                g = user.getGoal("Medication: " + m.getName());
+                                                //Log.d(TAG, "Medication OnSuccess: "+g.getType());
+                                                boolean alreadyMet = g.dailyGoalMet();
+                                                if (today.getTimeInMillis() < newLog[0].getDateTime().getTime())
+                                                    g.addDailyProgress(1);
+                                                GoalReminder.showDailyGoalMet(getApplicationContext(), g);
+                                                if (g.dailyGoalMet() && !alreadyMet)
+                                                    g.addWeeklyProgress(1);
+                                            }
+                                            Log.d("DEBUGGING", user.toString());
+                                            setMessage("logAdded");
+                                            UserStorage.saveUser(user);
+                                            UserStorage.storeActivity(UserStorage.LOG);
                                         }
+                                        //wrote l code here
+
+                                    }
                                 });
 
 
@@ -1119,7 +1133,7 @@ public class MainActivity extends AppCompatActivity implements
                 s = "Please choose the face that best shows how you're feeling right now.";
                 break;
             case "activityError":
-                s = "Please type in how many minutes of exercise you've done, and what type.";
+                s = "Please type in minutes of exercise greater than or equal to your daily goal, and what type.";
                 break;
             case "logAdded":
                 s = "Your log has been saved!";

@@ -1,9 +1,6 @@
 package com.example.diabetesmanagement.data;
 
 
-
-
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,12 +12,11 @@ public class User implements Serializable {
     //private String lName;
     public static final String MALE = "Male";
     public static final String FEMALE = "Female";
-    private static final String TAG ="User" ;
+    private static final String TAG = "User";
 
     private String userName;
 
     private int reminderRequestCodes;
-
 
 
     /**
@@ -60,12 +56,11 @@ public class User implements Serializable {
     private ArrayList<LogMood> logsMood = new ArrayList<>();
 
     //TODO: denormalize logs, and possibly goals/reminders/medications
-    public User()
-    {
+    public User() {
 
     }
-    public User(String userId)
-    {
+
+    public User(String userId) {
         //setfName("");
         //setlName("");
         setId(userId);
@@ -82,6 +77,7 @@ public class User implements Serializable {
         initializeScores();
         //initializePurgeDate();
     }
+
     /*
     public void setNextPurge(Date date){
         nextPurge = date;
@@ -101,8 +97,7 @@ public class User implements Serializable {
         setNextPurge(c.getTime());
     }
     */
-    public void addMedicationGoal(Medication medication)
-    {
+    public void addMedicationGoal(Medication medication) {
         Date firstDailyReset;
         Date firstWeeklyReset;
 
@@ -136,12 +131,12 @@ public class User implements Serializable {
         c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), 0, 0);
         c.add(Calendar.DATE, 1);
         firstDailyReset = c.getTime();
-        android.util.Log.d("TIMEDEBUG","Daily reset time: " + c.get(Calendar.YEAR) + " " + c.get(Calendar.MONTH)
-            + " " + c.get(Calendar.DAY_OF_MONTH) + " " + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE));
+        android.util.Log.d("TIMEDEBUG", "Daily reset time: " + c.get(Calendar.YEAR) + " " + c.get(Calendar.MONTH)
+                + " " + c.get(Calendar.DAY_OF_MONTH) + " " + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE));
         while (c.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
-                    c.add(Calendar.DATE, 1);
+            c.add(Calendar.DATE, 1);
         firstWeeklyReset = c.getTime();
-        android.util.Log.d("TIMEDEBUG","Weekly reset time: " + c.get(Calendar.YEAR) + " " + c.get(Calendar.MONTH)
+        android.util.Log.d("TIMEDEBUG", "Weekly reset time: " + c.get(Calendar.YEAR) + " " + c.get(Calendar.MONTH)
                 + " " + c.get(Calendar.DAY_OF_MONTH) + " " + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE));
 
 
@@ -171,16 +166,18 @@ public class User implements Serializable {
         insulin.setNextDailyReset(firstDailyReset);
         insulin.setNextWeeklyReset(firstWeeklyReset);
         addGoal(insulin);
-        /*
-        Goal medicine = new Goal();
+        /**For Medication*/
+        /*Goal medicine = new Goal();
         // targets are 0 by default, means it won't be used for feedback purposes.  Can be changed if user has medications
         medicine.setType(Goal.MEDICINE);
-        medicine.setActive(false);
+        medicine.setDailyAmount(0);
+        medicine.setWeeklyAmount(0);
+        //medicine.setActive(false);
         medicine.setUserID(id);
         medicine.setNextDailyReset(firstDailyReset);
         medicine.setNextWeeklyReset(firstWeeklyReset);
-        addGoal(medicine);
-        */
+        addGoal(medicine);*/
+        /**For Food Meal*/
         Goal foodmeal = new Goal();
         foodmeal.setMealAmount(3);
         foodmeal.setType(Goal.FOODMEAL);
@@ -219,7 +216,7 @@ public class User implements Serializable {
         addGoal(mood);
     }
 
-    private void initializeScores(){
+    private void initializeScores() {
         Date goalReset;
         Calendar c = Calendar.getInstance();
         c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), 0, 0);
@@ -232,71 +229,94 @@ public class User implements Serializable {
         setGoalReset(goalReset);
     }
 
-    public void setGoalReset(Date goalReset)
-    {
+    public void setGoalReset(Date goalReset) {
         this.goalReset = goalReset;
     }
 
-    public Date getGoalReset() {return goalReset;}
+    public Date getGoalReset() {
+        return goalReset;
+    }
 
-    public void setPoints(int totalScore)
-    {
+    public void setPoints(int totalScore) {
         this.totalPoints = totalScore;
     }
 
-    public int getPoints() {return totalPoints;}
-
-    public void setBadges(int numberOfBadgesEarned)
-    {
-        this.totalBadges= numberOfBadgesEarned;
+    public int getPoints() {
+        return totalPoints;
     }
 
-    public int getBadges(){return totalBadges;}
+    public void setBadges(int numberOfBadgesEarned) {
+        this.totalBadges = numberOfBadgesEarned;
+    }
 
-    public void setSunday(boolean b){
+    public int getBadges() {
+        return totalBadges;
+    }
+
+    public void setSunday(boolean b) {
         this.Sunday = b;
     }
-    public void setMonday(boolean b){
+
+    public void setMonday(boolean b) {
         this.Monday = b;
     }
-    public void setTuesday(boolean b){
+
+    public void setTuesday(boolean b) {
         this.Tuesday = b;
     }
-    public void setWednesday(boolean b){this.Wednesday = b;}
-    public void setThursday(boolean b){
+
+    public void setWednesday(boolean b) {
+        this.Wednesday = b;
+    }
+
+    public void setThursday(boolean b) {
         this.Thursday = b;
     }
-    public void setFriday(boolean b){
+
+    public void setFriday(boolean b) {
         this.Friday = b;
     }
-    public void setSaturday(boolean b){
+
+    public void setSaturday(boolean b) {
         this.Saturday = b;
     }
-    public void setToday(boolean b){
+
+    public void setToday(boolean b) {
         this.Today = b;
     }
 
 
-    public boolean getSunday(){
+    public boolean getSunday() {
         return this.Sunday;
     }
-    public boolean getMonday(){
+
+    public boolean getMonday() {
         return this.Monday;
     }
-    public boolean getTuesday(){
+
+    public boolean getTuesday() {
         return this.Tuesday;
     }
-    public boolean getWednesday(){
+
+    public boolean getWednesday() {
         return this.Wednesday;
     }
-    public boolean getThursday(){
+
+    public boolean getThursday() {
         return this.Thursday;
     }
-    public boolean getFriday(){
+
+    public boolean getFriday() {
         return this.Friday;
     }
-    public boolean getSaturday(){return this.Saturday;}
-    public boolean getToday(){return this.Today;}
+
+    public boolean getSaturday() {
+        return this.Saturday;
+    }
+
+    public boolean getToday() {
+        return this.Today;
+    }
 
 
     public boolean isTextToSpeechEnabled() {
@@ -323,14 +343,12 @@ public class User implements Serializable {
         this.reminderRequestCodes = reminderRequestCodes;
     }
 
-    public double weeklyA1C()
-    {
-        return (46.7 + weeklyAvgBloodSugar())/ 28.7;
+    public double weeklyA1C() {
+        return (46.7 + weeklyAvgBloodSugar()) / 28.7;
     }
 
-    public double monthlyA1C()
-    {
-        return (46.7 + monthlyAvgBloodSugar())/ 28.7;
+    public double monthlyA1C() {
+        return (46.7 + monthlyAvgBloodSugar()) / 28.7;
     }
 
     /*public String getfName() {
@@ -375,7 +393,8 @@ public class User implements Serializable {
     }
 
     public int getWeight() {
-        return weight; }
+        return weight;
+    }
 
     public void setWeight(int weight) {
         this.weight = weight;
@@ -416,8 +435,6 @@ public class User implements Serializable {
     }
 
 
-
-
     public int weeklyAvgBloodSugar() {
         ArrayList<LogBloodSugar> weeklyLogs = new ArrayList<>();
 
@@ -425,26 +442,22 @@ public class User implements Serializable {
         //get this week's logs
         Calendar start = Calendar.getInstance();
         start.roll(Calendar.WEEK_OF_YEAR, -1);
-        android.util.Log.d("DEBUGGING", "Start Year/week: " + start.get(Calendar.YEAR)+ "/" + start.get(Calendar.WEEK_OF_YEAR));
+        android.util.Log.d("DEBUGGING", "Start Year/week: " + start.get(Calendar.YEAR) + "/" + start.get(Calendar.WEEK_OF_YEAR));
         Calendar end = Calendar.getInstance();
-        android.util.Log.d("DEBUGGING", "End Year/week: " + end.get(Calendar.YEAR)+ "/" + end.get(Calendar.WEEK_OF_YEAR));
+        android.util.Log.d("DEBUGGING", "End Year/week: " + end.get(Calendar.YEAR) + "/" + end.get(Calendar.WEEK_OF_YEAR));
 
-        for(LogBloodSugar log:logs)
-        {
-            if(start.getTimeInMillis() <= log.getDateTime().getTime() && log.getDateTime().getTime() <= end.getTimeInMillis())
+        for (LogBloodSugar log : logs) {
+            if (start.getTimeInMillis() <= log.getDateTime().getTime() && log.getDateTime().getTime() <= end.getTimeInMillis())
                 weeklyLogs.add(log);
         }
         int totalBloodSugar = 0;
         int numEntries = 0;
-        for (LogBloodSugar log:weeklyLogs)
-        {
+        for (LogBloodSugar log : weeklyLogs) {
             numEntries++;
             totalBloodSugar += log.getBloodSugar();
         }
-        return Math.round(((float)totalBloodSugar)/numEntries);
+        return Math.round(((float) totalBloodSugar) / numEntries);
     }
-
-
 
 
     public int monthlyAvgBloodSugar() {
@@ -455,24 +468,22 @@ public class User implements Serializable {
 
         Calendar start = Calendar.getInstance();
         start.roll(Calendar.MONTH, -1);
-        android.util.Log.d("DEBUGGING", "Start Year/Month: " + start.get(Calendar.YEAR)+ "/" + start.get(Calendar.WEEK_OF_YEAR));
+        android.util.Log.d("DEBUGGING", "Start Year/Month: " + start.get(Calendar.YEAR) + "/" + start.get(Calendar.WEEK_OF_YEAR));
         Calendar end = Calendar.getInstance();
-        android.util.Log.d("DEBUGGING", "End Year/Month: " + end.get(Calendar.YEAR)+ "/" + end.get(Calendar.WEEK_OF_YEAR));
+        android.util.Log.d("DEBUGGING", "End Year/Month: " + end.get(Calendar.YEAR) + "/" + end.get(Calendar.WEEK_OF_YEAR));
 
-        for(LogBloodSugar log:logs)
-        {
-            if(start.getTimeInMillis() <= log.getDateTime().getTime() && log.getDateTime().getTime() <= end.getTimeInMillis())
+        for (LogBloodSugar log : logs) {
+            if (start.getTimeInMillis() <= log.getDateTime().getTime() && log.getDateTime().getTime() <= end.getTimeInMillis())
                 monthlyLogs.add(log);
         }
 
         int totalBloodSugar = 0;
         int numEntries = 0;
-        for (LogBloodSugar log:monthlyLogs)
-        {
+        for (LogBloodSugar log : monthlyLogs) {
             numEntries++;
             totalBloodSugar += log.getBloodSugar();
         }
-        return Math.round(((float)totalBloodSugar)/numEntries);
+        return Math.round(((float) totalBloodSugar) / numEntries);
     }
 
     /*
@@ -490,71 +501,65 @@ public class User implements Serializable {
         return logs;
     }
     */
-    public void addLogBloodSugar(LogBloodSugar l)
-    {
+    public void addLogBloodSugar(LogBloodSugar l) {
         logsBloodSugar.add(l);
     }
 
-    public void addLogInsulin(LogInsulin l)
-    {
+    public void addLogInsulin(LogInsulin l) {
         logsInsulin.add(l);
     }
 
 
-    public void addLogMedication(LogMedication l)
-    {
+    public void addLogMedication(LogMedication l) {
         logsMedication.add(l);
     }
 
-    public void addLogFood(LogFood l){
+    public void addLogFood(LogFood l) {
         logsFood.add(l);
     }
 
-    public void addLogActivity(LogActivity l){
+    public void addLogActivity(LogActivity l) {
         logsActivity.add(l);
     }
 
-    public void addLogWeight(LogWeight l){
+    public void addLogWeight(LogWeight l) {
         logsWeight.add(l);
     }
 
-    public void addLogMood(LogMood l)
-    {
+    public void addLogMood(LogMood l) {
         logsMood.add(l);
     }
-/*
-    public void addLog(Log l)
-    {
-        if (l != null){
-            switch (l.logType())
-            {
-                case "BloodSugar": logsBloodSugar.add(l);
-                    break;
-                case "Insulin": logsInsulin.add(l);
-                    break;
-                case "Food": logsFood.add(l);
-                    break;
-                case "Medication": logsMedication.add(l);
-                    break;
-                case "Activity": logsActivity.add(l);
-                    break;
-                case "Weight": logsWeight.add(l);
-                    break;
-                case "Mood": logsMood.add(l);
-                    break;
+
+    /*
+        public void addLog(Log l)
+        {
+            if (l != null){
+                switch (l.logType())
+                {
+                    case "BloodSugar": logsBloodSugar.add(l);
+                        break;
+                    case "Insulin": logsInsulin.add(l);
+                        break;
+                    case "Food": logsFood.add(l);
+                        break;
+                    case "Medication": logsMedication.add(l);
+                        break;
+                    case "Activity": logsActivity.add(l);
+                        break;
+                    case "Weight": logsWeight.add(l);
+                        break;
+                    case "Mood": logsMood.add(l);
+                        break;
+                }
             }
         }
-    }
-*/
-    public boolean hasMedication()
-    {
+    */
+    public boolean hasMedication() {
         return (medications.size() > 0);
     }
 
-    public Medication getMedication(String name)
-    {
-        for (Medication m:getMedications())
-        {
+    public Medication getMedication(String name) {
+        for (Medication m : getMedications()) {
             if (m.getName().equals(name))
                 return m;
         }
@@ -563,19 +568,18 @@ public class User implements Serializable {
         return none;
     }
 
-    public void addMedication(Medication m){
-        medications.add (m);
+    public void addMedication(Medication m) {
+        medications.add(m);
     }
 
-    public void addMedication(Medication m, int i){
-        medications.add (i, m);
+    public void addMedication(Medication m, int i) {
+        medications.add(i, m);
     }
 
 
-    public int removeMedication(String s){
+    public int removeMedication(String s) {
         int index = -1;
-        for (int i = 0; i < medications.size(); i ++)
-        {
+        for (int i = 0; i < medications.size(); i++) {
             if (medications.get(i).getName().equals(s))
                 index = i;
         }
@@ -585,24 +589,17 @@ public class User implements Serializable {
     }
 
 
-
-
-
-    public void addReminder(Reminder r)
-    {
+    public void addReminder(Reminder r) {
         reminders.add(r);
     }
 
-    public void addReminder(Reminder r, int i)
-    {
+    public void addReminder(Reminder r, int i) {
         reminders.add(i, r);
     }
 
-    public int removeReminder(String s)
-    {
+    public int removeReminder(String s) {
         int index = -1;
-        for (int i = 0; i < reminders.size(); i ++)
-        {
+        for (int i = 0; i < reminders.size(); i++) {
             if (reminders.get(i).getDescription().equals(s))
                 index = i;
         }
@@ -612,24 +609,17 @@ public class User implements Serializable {
     }
 
 
-
-
-
-    public void addGoal(Goal g)
-    {
+    public void addGoal(Goal g) {
         goals.add(g);
     }
 
-    public void addGoal(Goal g, int i)
-    {
+    public void addGoal(Goal g, int i) {
         goals.add(i, g);
     }
 
-    public int removeGoal(String s)
-    {
+    public int removeGoal(String s) {
         int index = -1;
-        for (int i = 0; i <goals.size(); i ++)
-        {
+        for (int i = 0; i < goals.size(); i++) {
             if (goals.get(i).getType().equals(s))
                 index = i;
         }
@@ -639,17 +629,12 @@ public class User implements Serializable {
     }
 
 
-
-
-
-    public ArrayList<LogBloodSugar> getLogsBloodSugar()
-    {
+    public ArrayList<LogBloodSugar> getLogsBloodSugar() {
         //return new ArrayList<Log>();
         return logsBloodSugar;
     }
 
-    public ArrayList<LogInsulin> getLogsInsulin()
-    {
+    public ArrayList<LogInsulin> getLogsInsulin() {
         //return new ArrayList<>();
         return logsInsulin;
     }
@@ -659,26 +644,22 @@ public class User implements Serializable {
         return logsFood;
     }
 
-    public ArrayList<LogMedication> getLogsMedication()
-    {
+    public ArrayList<LogMedication> getLogsMedication() {
         //return new ArrayList<>();
         return logsMedication;
     }
 
-    public ArrayList<LogActivity> getLogsActivity()
-    {
+    public ArrayList<LogActivity> getLogsActivity() {
         //return new ArrayList<>();
         return logsActivity;
     }
 
-    public ArrayList<LogWeight> getLogsWeight()
-    {
+    public ArrayList<LogWeight> getLogsWeight() {
         //return new ArrayList<>();
         return logsWeight;
     }
 
-    public ArrayList<LogMood> getLogsMood()
-    {
+    public ArrayList<LogMood> getLogsMood() {
         //return new ArrayList<>();
         return logsMood;
     }
@@ -727,13 +708,9 @@ public class User implements Serializable {
     }
 
 
-
-
-    public Goal getGoal(String type)
-    {
+    public Goal getGoal(String type) {
         Goal goal = new Goal();
-        for (Goal g:getGoals())
-        {
+        for (Goal g : getGoals()) {
             if (g.getType().equals(type))
                 goal = g;
         }
@@ -741,13 +718,9 @@ public class User implements Serializable {
     }
 
 
-
-
-    public int reminderCount(String s)
-    {
+    public int reminderCount(String s) {
         int i = 0;
-        for(Reminder r:getReminders())
-        {
+        for (Reminder r : getReminders()) {
             if (r.getDescription().equals(s))
                 i++;
         }
@@ -755,13 +728,9 @@ public class User implements Serializable {
     }
 
 
-
-
-    public int medicationCount(String s)
-    {
+    public int medicationCount(String s) {
         int i = 0;
-        for(Medication m:medications)
-        {
+        for (Medication m : medications) {
             if (m.getName().equals(s))
                 i++;
         }
@@ -769,20 +738,16 @@ public class User implements Serializable {
     }
 
 
-
-
-
-    public String toString()
-    {
+    public String toString() {
         String user = "";
         String[] s = {"Blood sugar", "Insulin", "Food", "Medication", "Activity", "Weight", "Mood"};
         //user+=" Name: ";
         //user+=getfName() + " " + getlName();
-        user+=" ID: " + getId();
-        user+=" Age: " + getAge();
-        user+=" Gender: " + getGender();
-        user+=" Weight: " + getWeight();
-        user+=" Diabetes type: " + getDiabetesType();
+        user += " ID: " + getId();
+        user += " Age: " + getAge();
+        user += " Gender: " + getGender();
+        user += " Weight: " + getWeight();
+        user += " Diabetes type: " + getDiabetesType();
         /*
         user+=" \n Logs entered: \n";
          ArrayList<ArrayList<Log>> logs = logs();

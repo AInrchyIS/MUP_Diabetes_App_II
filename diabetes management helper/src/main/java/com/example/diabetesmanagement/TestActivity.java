@@ -34,7 +34,7 @@ public class TestActivity extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        Log.d("FIREBASELOGIN", user.getEmail());
+        Log.d("FIREBASELOGIN","Users Are"+  user.getEmail());
         if (user != null) {
             String id = user.getUid();
             FirebaseFirestore db = FirebaseFirestore.getInstance();

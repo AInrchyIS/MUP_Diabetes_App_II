@@ -48,6 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,-. "
             android:ems="10"
             android:hint="fruit, chicken, fish, etc."
             android:inputType="textPersonName" />
@@ -68,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/meal"
+                android:checked="true"
                 android:textColor="@color/design_default_color_on_secondary"
                 android:textSize="18sp"
                 android:textStyle="bold" />

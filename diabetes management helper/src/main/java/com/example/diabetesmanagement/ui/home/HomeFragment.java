@@ -52,8 +52,6 @@ public class HomeFragment extends Fragment {
             imageMedicalImageview, imageInsulinImageview,
             imageFoodImageviewMeal, imageFoodImageviewSnack,
             imageActivityImageview, imageWeightImageview, imageMoodImageview;
-
-
     Calendar c;
 
     private HomeFragment.OnFragmentInteractionListener mListener;
@@ -208,6 +206,7 @@ public class HomeFragment extends Fragment {
                     int totalValues = userData.getPoints();
                     boolean todayBadge = userData.getToday();
                     int badgeValue = userData.getBadges();
+                    Log.d(TAG, "Badge Value : "+badgeValue);
                     int amount = 0;
                     int progress = 0;
                     LinearLayout layout = view.findViewById(R.id.imageLinear);
@@ -250,7 +249,6 @@ public class HomeFragment extends Fragment {
                                     image.setLayoutParams(new android.view.ViewGroup.LayoutParams(80, 60));
                                     image.setMaxHeight(20);
                                     image.setMaxWidth(20);
-
                                     if (progress >= i)
                                         image.setImageResource(R.drawable.medical1);
                                     else if (progress < i)
@@ -259,40 +257,27 @@ public class HomeFragment extends Fragment {
                                     // Adds the view to the layout
                                     layout.addView(image);
                                 }
-
-
                             }
+
                             if (goal.getType().equals(Goal.MEDICINE)) {
                                 amount = goal.getDailyAmount();
                                 progress = goal.getDailyProgress();
                                 System.out.println("medicine" + amount);
+                                Log.d("GetDailyAmount", "onSuccess: "+progress);
                                 for (int i = 1; i <= amount; i++) {
                                     ImageView image = new ImageView(getContext());
                                     image.setLayoutParams(new android.view.ViewGroup.LayoutParams(80, 60));
                                     image.setMaxHeight(20);
                                     image.setMaxWidth(20);
-                                    /*  if (LogBaseline.fireBaseDoneBooleanBtn == true) {*/
-                                    if (progress >= i) {
-                                            /*Log.d(TAG, "onSuccess Progress : "+progress);
-                                            totalValues = userData.getScores().getTotalScore();
-                                            totalValues = totalValues + 10;
-                                            badgeValue = totalValues / 100;
-                                            todayValue = totalValues % 100;
-                                            pmd = new ProductionModelClass(totalValues, todayValue, badgeValue);
-                                            userData.setScores(pmd);*/
+                                    if (progress >= i)
                                         image.setImageResource(R.drawable.medical1);
-                                        Log.d(TAG, "onSuccess Progress : " + progress);
-                                        /* LogBaseline.fireBaseDoneBooleanBtn = false;*/
-                                    } else if (progress < i)
-                                        /*totalValues = userData.getScores().getTotalScore();*/
+                                     else if (progress < i)
                                         image.setImageResource(R.drawable.medical);
                                     // Adds the view to the layout
                                     layout.addView(image);
-
-                                    /* }*/
-
                                 }
                             }
+
                             if (goal.getType().equals(Goal.FOODMEAL)) {
                                 amount = goal.getMealAmount();
                                 progress = goal.getMealsEaten();

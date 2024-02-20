@@ -3,6 +3,55 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/murad/AndroidStudioProjects/FINALAPP_7_2_2022/diabetes-app-main-study/diabetes management helper/src/main/res/layout/fragment_captaincy_club.xml" value="0.3625" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/FINALAPP_7_2_2022/diabetes-app-main-study/diabetes management helper/src/main/res/layout/fragment_elite_club.xml" value="0.3625" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/FINALAPP_7_2_2022/diabetes-app-main-study/diabetes management helper/src/main/res/layout/fragment_governor_club.xml" value="0.3625" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/FINALAPP_7_2_2022/diabetes-app-main-study/diabetes management helper/src/main/res/layout/fragment_presidency_club.xml" value="0.3625" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/FINALAPP_7_2_2022/diabetes-app-main-study/diabetes management helper/src/main/res/layout/fragment_warrior_club.xml" value="0.3625" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/drawable/circle_shape_bg.xml" value="0.14166666666666666" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/drawable/club_text_bg.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/drawable/ic_exit_to_app_black_64dp.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/activity_club_narrative.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/activity_firebase_auth.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/activity_test.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/add_medicine_no_times_dialogue.xml" value="0.536" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/custom_dialogbox.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/custom_dialogbox_level.xml" value="0.3625" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/custom_dialogbox_totalbadges.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/disclaimer_dialogue_layout.xml" value="0.3828571428571429" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_captaincy_club.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_elite_club.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_goal.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_goal_setup.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_governor_club.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_level.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_log_activity.xml" value="0.3625" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_log_baseline.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_log_blood_sugar.xml" value="0.3625" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_log_food.xml" value="0.3625" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_log_insulin.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_log_mood.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_log_view.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_log_weight.xml" value="0.8387395736793327" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_medication.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_medication_setup.xml" value="0.1" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_medicine.xml" value="0.3625" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_notification.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_notification_setup.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_personal_info.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_presidency_club.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_register.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_resource.xml" value="0.3625" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/fragment_warrior_club.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/home_fragment.xml" value="0.67" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/item_goal.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/item_medication.xml" value="0.536" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/item_notification.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/log_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/main_activity.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/medicine_dialogue_layout.xml" value="0.36302083333333335" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/row_recycler.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/murad/AndroidStudioProjects/daibetes-app/diabetes-app-4-3/diabetes management helper/src/main/res/layout/settings_fragment.xml" value="0.33" />
         <entry key="diabetes management helper/src/main/res/layout/home_fragment.xml" value="0.2190359187614298" />
         <entry key="diabetes management helper/src/main/res/layout/settings_fragment.xml" value="0.2427536231884058" />
       </map>

@@ -164,10 +164,18 @@ public class GoalSetupFragment extends Fragment {
                 goal.setWeeklyAmount(Integer.parseInt(goalWeekly.getText().toString()));
                 goal.setMealAmount(Integer.parseInt(goalMeal.getText().toString()));
                 goal.setSnackAmount(Integer.parseInt(goalSnack.getText().toString()));
-                goalBundle.putString("button", "save");
+                if (goal == null){
+                    goalDaily.setError("Invalid input");
+                } else{
+                    goalBundle.putString("button", "save");
+                    goalBundle.putSerializable("goal", goal);
+                    onButtonPressed(goalBundle);
+                    /*LogBaseline.fireBaseDoneBooleanBtn = true;*/
+                }
+                /*goalBundle.putString("button", "save");
                 goalBundle.putSerializable("goal", goal);
                 onButtonPressed(goalBundle);
-                /*LogBaseline.fireBaseDoneBooleanBtn = true;*/
+                *//*LogBaseline.fireBaseDoneBooleanBtn = true;*/
             }
         });
 

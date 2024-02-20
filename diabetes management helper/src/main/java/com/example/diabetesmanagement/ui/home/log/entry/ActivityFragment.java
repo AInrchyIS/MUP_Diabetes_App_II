@@ -167,7 +167,9 @@ public class ActivityFragment extends Fragment {
 
     public Bundle getLogData() {
 
-        if (minutesActivity.getText().toString().equals("") || (minutesActivity.getText().toString().equals("0"))
+        if (minutesActivity.getText().toString().equals("")
+                || (minutesActivity.getText().toString().equals("0"))
+                || (Integer.parseInt(minutesActivity.getText().toString()) > 180)
                 || activityDesc.getText().toString().equals("")) {
             Log.d("DEBUGGING", "no minutesActivity/activityDesc entered");
             log.putBoolean("validInput", false);

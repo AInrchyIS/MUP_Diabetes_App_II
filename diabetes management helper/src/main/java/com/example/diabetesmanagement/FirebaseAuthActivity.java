@@ -7,6 +7,8 @@ import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
 
 import com.example.diabetesmanagement.constatntClass.ConstantClass;
+import com.example.diabetesmanagement.constatntClass.DisclaimerClass;
+import com.example.diabetesmanagement.constatntClass.SharedPreferenceClass;
 import com.example.diabetesmanagement.data.User;
 import com.example.diabetesmanagement.service.UserStorage;
 import com.firebase.ui.auth.AuthUI;
@@ -33,12 +35,32 @@ import android.util.Log;
 public class FirebaseAuthActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 123;
+    /**
+     * Create Shared Preferences Instance
+     */
+    SharedPreferenceClass sharedPreferenceClass;
+    /**
+     * Create Disclaimer Class Instance
+     */
+    DisclaimerClass disclaimerClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_auth);
-        createSignInIntent();
+        /**Create Shared Preferences And Disclaimer Object*/
+        sharedPreferenceClass = new SharedPreferenceClass(this
+        );
+        disclaimerClass = new DisclaimerClass(this
+        );
+        /**Check Value Of Shared PreferencesDisclaimer Method */
+        if (sharedPreferenceClass.getDisclaimerValue() == 0) {
+            disclaimerClass.disclaimerDialogue(this
+            );
+        } else {
+            createSignInIntent();
+        }
+
     }
 
     public void createSignInIntent() {

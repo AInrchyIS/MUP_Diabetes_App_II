@@ -54,6 +54,7 @@
             android:layout_height="wrap_content"
             android:hint="minutes"
             android:inputType="number"
+            android:maxLength="3"
             android:minEms="8" />
     </TableRow>
 
@@ -81,6 +82,7 @@
             android:id="@+id/data_activityDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,-. "
             android:hint="Walking, running, etc."
             android:inputType="textPersonName"
             android:minEms="8" />

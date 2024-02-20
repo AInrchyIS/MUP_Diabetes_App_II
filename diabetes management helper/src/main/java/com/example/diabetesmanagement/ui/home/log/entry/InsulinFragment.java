@@ -154,16 +154,18 @@ public class InsulinFragment extends Fragment {
         }*/
     }
 
-    public Bundle getLogData()
-    {
-        if (insulin.getText().toString().equals("")) {
+    public Bundle getLogData() {
+        if (insulin.getText().toString().equals("")
+                || (Integer.parseInt(insulin.getText().toString()) < 1)
+                || (Integer.parseInt(insulin.getText().toString()) > 120)) {
             Log.d("DEBUGGING", "no insulin entered");
             log.putBoolean("validInput", false);
+            insulin.setError("Invalid input");
             //Toast toast=Toast.makeText(getContext(),"Please enter the amount of insulin taken", Toast.LENGTH_LONG);
             //toast.show();
-            ((MainActivity)getActivity()).setMessage("insulinError");
+            ((MainActivity) getActivity()).setMessage("insulinError");
         }
-        else {
+        else{
             log.putBoolean("validInput", true);
             log.putInt("insulin", Integer.parseInt(insulin.getText().toString()));
             //log.putBoolean("food", food.isChecked());

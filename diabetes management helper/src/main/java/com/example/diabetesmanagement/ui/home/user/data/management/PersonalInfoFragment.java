@@ -144,34 +144,43 @@ public class PersonalInfoFragment extends Fragment {
             public void onClick(View v) {
                 v.playSoundEffect(SoundEffectConstants.CLICK);
                 String type = "Type 2"; //diabetesType.getSelectedItem().toString();
+                /**Check age entry*/
                 String genderString = gender.getSelectedItem().toString();
                 if (//!fName.getText().toString().equals("")
                 //&& !lName.getText().toString().equals("") &&
                 !age.getText().toString().equals("")
                 && age.getText().toString().length() < 4
-                && !type.equals("") && !genderString.equals(""))
-                {
-                    //personalInfo.putString("fName", fName.getText().toString());
-                    //personalInfo.putString("lName", lName.getText().toString());
-                    personalInfo.putInt("age", Integer.parseInt(age.getText().toString()));
-
-                    personalInfo.putString("diabetesType", type);
-                    personalInfo.putString("gender", genderString);
+                && !type.equals("") && !genderString.equals("")) {
+                    String value = age.getText().toString();
+                    int finalValue = Integer.parseInt(value);
+                    if (finalValue <= 17 || finalValue > 100) {
+                        age.setError("Invalid input");
+                    } else {
+                        if (//!fName.getText().toString().equals("")
+                            //&& !lName.getText().toString().equals("") &&
+                                !age.getText().toString().equals("")
+                                        && age.getText().toString().length() < 4
+                                        && !type.equals("") && !genderString.equals("")) {
+                            //personalInfo.putString("fName", fName.getText().toString());
+                            //personalInfo.putString("lName", lName.getText().toString());
+                            personalInfo.putInt("age", Integer.parseInt(age.getText().toString()));
+                            personalInfo.putString("diabetesType", type);
+                            personalInfo.putString("gender", genderString);
                     /*Log.d("DEBUGGING", fName.getText().toString() + " " +
                             lName.getText().toString()+ " " +
                             age.getText().toString() + " " +
                             diabetesType.getSelectedItem().toString());*/
-                    onButtonPressed(personalInfo);
+                            onButtonPressed(personalInfo);
+                        } else if (age.getText().toString().length() > 3)
+                            ((MainActivity) getActivity()).setMessage("pInfoAgeError");
+                            //else if (type.equals(""))
+                            //    ((MainActivity)getActivity()).setMessage("pInfoTypeError");
+                        else if (genderString.equals(""))
+                            ((MainActivity) getActivity()).setMessage("pInfoGenderError");
+                        else
+                            ((MainActivity) getActivity()).setMessage("pInfoError");
+                    }
                 }
-                else
-                    if (age.getText().toString().length() > 3)
-                        ((MainActivity)getActivity()).setMessage("pInfoAgeError");
-                    //else if (type.equals(""))
-                    //    ((MainActivity)getActivity()).setMessage("pInfoTypeError");
-                    else if (genderString.equals(""))
-                        ((MainActivity)getActivity()).setMessage("pInfoGenderError");
-                    else
-                        ((MainActivity)getActivity()).setMessage("pInfoError");
             }
         });
     }

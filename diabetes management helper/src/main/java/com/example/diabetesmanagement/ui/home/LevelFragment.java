@@ -3,10 +3,12 @@ package com.example.diabetesmanagement.ui.home;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,8 +28,13 @@ import com.example.diabetesmanagement.data.Goal;
 import com.example.diabetesmanagement.data.User;
 //import com.example.diabetesmanagement.service.LevelAlertFragment;
 import com.example.diabetesmanagement.ui.home.user.data.management.GoalFragment;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -160,51 +167,65 @@ public class LevelFragment extends Fragment implements AdapterLevelInterface {
     }
 
     @Override
-    public void levelAdapterMethod(String levelPosition) {
+    public void levelAdapterMethod(final String levelPosition) {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("counterText", 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         int counterTextIncrement = sharedPreferences.getInt(ConstantClass.counterIncrement, 0);
         int levelBadgeIncrement = (counterTextIncrement % 500);
         levelBadgeIncrement = levelBadgeIncrement / 100;
 
-        if (levelPosition.equals("Level 1")) {
-            if (levelBadgeIncrement >= 1) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.main_fragment, mWarriorClubFragment)
-                        .commitNow();
-            }
-            else showAlertDialogLevels();
-        }
+        /**Get Badges Value from Firebase*/
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseFirestore.getInstance().collection("users")
+                .document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                try {
+                    User userData = documentSnapshot.toObject(User.class);
+                    assert userData != null;
+                    switch (levelPosition) {
+                        case "Level 1":
+                            if (userData.getBadges() >= 5) {
+                                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.main_fragment, mWarriorClubFragment)
+                                        .commitNow();
+                            } else showAlertDialogLevels(5 - userData.getBadges());
+                            break;
+                        case "Level 2":
+                            if (userData.getBadges() >= 15) {
+                                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.main_fragment, mCaptaincyClubFragment)
+                                        .commitNow();
+                            } else showAlertDialogLevels(15-userData.getBadges());
+                            break;
+                        case "Level 3":
+                            if (userData.getBadges() >= 30) {
+                                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.main_fragment, mGovernorClubFragment)
+                                        .commitNow();
+                            } else showAlertDialogLevels(30-userData.getBadges());
+                            break;
+                        case "Level 4":
+                            if (userData.getBadges() >= 50) {
+                                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.main_fragment, mPresidencyClubFragment)
+                                        .commitNow();
+                            } else showAlertDialogLevels(50-userData.getBadges());
+                            break;
+                        case "Level 5":
+                            if (userData.getBadges() >= 75) {
+                                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.main_fragment, mEliteClubFragment)
+                                        .commitNow();
+                            } else showAlertDialogLevels(75-userData.getBadges());
+                            break;
+                    }
+                } catch (Exception ignored) {
 
-        if (levelPosition.equals("Level 2")) {
-            if (levelBadgeIncrement >= 3) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.main_fragment, mCaptaincyClubFragment)
-                        .commitNow();
+                }
             }
-            else showAlertDialogLevels();
-        } else if (levelPosition.equals("Level 3")) {
-            if (levelBadgeIncrement >= 4) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.main_fragment, mGovernorClubFragment)
-                        .commitNow();
-            }
-            else showAlertDialogLevels();
-        } else if (levelPosition.equals("Level 4")) {
-            if (levelBadgeIncrement >= 5) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.main_fragment, mPresidencyClubFragment)
-                        .commitNow();
-            }
-            else showAlertDialogLevels();
-        } else if (levelPosition.equals("Level 5")) {
-            if (levelBadgeIncrement >= 6) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.main_fragment, mEliteClubFragment)
-                        .commitNow();
-            }
-            else showAlertDialogLevels();
-        }
+        });
     }
 
     public interface OnFragmentInteractionListener {
@@ -213,11 +234,13 @@ public class LevelFragment extends Fragment implements AdapterLevelInterface {
         void messageFromLevelFragment(Bundle bundle);
     }
 
-    public void showAlertDialogLevels() {
+    public void showAlertDialogLevels(int collectBadgesValue) {
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.custom_dialogbox_level);
+        TextView collectTextView = dialog.findViewById(R.id.custom_diaglog_totalbadges_tv_id);
+        collectTextView.setText("Please collect " +  collectBadgesValue +  " badges to unlock this level.");
         TextView close_btn = dialog.findViewById(R.id.close_dialog_totalbadge);
         close_btn.setOnClickListener(new View.OnClickListener() {
             @Override

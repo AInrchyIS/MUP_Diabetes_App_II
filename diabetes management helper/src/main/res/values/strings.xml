@@ -40,7 +40,7 @@
     </string-array>
     <string name="label_mood">Mood:</string>
     <string name="logout">Log out</string>
-    <string name="level">Levels</string>
+    <string name="level">Clubs</string>
     <string name="reminders">Reminders</string>
     <string name="goals">Goals</string>
     <string name="save">Save changes</string>
@@ -117,56 +117,59 @@
     <string name="totalBadges">Total Badges: 0</string>
 
 
+
     <string name="wc">Warrior Club</string>
     <string name="wctext">
-        \n\n\n\n\n\n\n
-        ♦ Warrior club acknowledges your effort\n\n
-        ♦ Member of warrior club is respected personality\n\n
-        ♦ You manifested a resilient attitudes\n\n
-        ♦ Tomorrow is subject to happiness and care.\n\n
+        \n\n\n\n
+        ♦ Warrior club acknowledges your valuable efforts.\n\n
+        ♦ It is a home for respected personality.\n\n
+        ♦ You manifested a resilient attitudes.\n\n
+        ♦ Tomorrow brings you happiness.\n\n
         ♦ Strive to reach next club.
     </string>
 
     <string name="cc">Captaincy Club</string>
     <string name="cctext">
-        \n\n\n\n\n\n\n
-        ♦ Warrior club acknowledges your effort\n\n
-        ♦ Member of warrior club is respected personality\n\n
+        \n\n\n\n
+        ♦ Captaincy club congratulates for your great achievements. \n\n
+        ♦ Members of captaincy club are goal getter.\n\n
         ♦ You manifested a resilient attitudes\n\n
-        ♦ Tomorrow is subject to happiness and care.\n\n
+        ♦ Fortune favors the brave.\n\n
         ♦ Strive to reach next club.
     </string>
 
     <string name="gc">Governor Club</string>
     <string name="gctext">
-        \n\n\n\n\n\n\n
-        ♦ Warrior club acknowledges your effort\n\n
-        ♦ Member of warrior club is respected personality\n\n
-        ♦ You manifested a resilient attitudes\n\n
-        ♦ Tomorrow is subject to happiness and care.\n\n
+        \n\n\n\n
+        ♦ Governor club is ready to celebrate your amazing success.\n\n
+        ♦ Governor club members have winner quality.\n\n
+        ♦ You manifested a strong mindset.\n\n
+        ♦ A shiny future awaits for you.\n\n
         ♦ Strive to reach next club.
     </string>
 
     <string name="pc">Presidency Club</string>
     <string name="pctext">
-        \n\n\n\n\n\n\n
-        ♦ Warrior club acknowledges your effort\n\n
-        ♦ Member of warrior club is respected personality\n\n
-        ♦ You manifested a resilient attitudes\n\n
-        ♦ Tomorrow is subject to happiness and care.\n\n
+        \n\n\n\n
+        ♦ Presidency club is honored to welcome you.\n\n
+        ♦ Members of Presidency club are extraordinary achievers.\n\n
+        ♦ You showed a fearless performance.\n\n
+        ♦ You are the hero.\n\n
         ♦ Strive to reach next club.
     </string>
 
     <string name="ec">Elite Club</string>
     <string name="ectext">
-        \n\n\n\n\n\n\n
-        ♦ Warrior club acknowledges your effort\n\n
-        ♦ Member of warrior club is respected personality\n\n
-        ♦ You manifested a resilient attitudes\n\n
-        ♦ Tomorrow is subject to happiness and care.\n\n
-        ♦ Strive to reach next club.
+        \n\n\n\n
+        ♦ Elite club warmly welcomes you to the highest club membership.\n\n
+        ♦ Members of Elite club are living legends.\n\n
+        ♦ You showed an iconic and exemplary achievements.\n\n
+        ♦ You are the role model for others.\n\n
+        ♦ Finally, you are at the peak of your achievements.
     </string>
-
+    <string name="disclaimer_details">This app is designed to help you monitor and manage diabetes self-care activities. It is not meant to be a substitute of medical assistance or your physician. In emergency, please contact to your physician or call 911.</string>
+    <string name="add_medicine_no_times_details">Please go to goals on settings and change Medicine logs goal to enter the number of times you take the medicine per day.</string>
+    <string name="terms_and_conditions">I Agree</string>
 
 
 </resources>

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class FoodFragment extends Fragment {
     private Bundle log;
     private User user;
     //private EditText carbs;
+    //private RadioGroup radioGroup;
     private EditText itemsEaten;
     private RadioButton meal;
     private RadioButton snack;
@@ -88,6 +90,7 @@ public class FoodFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         //carbs = view.findViewById(R.id.data_carbEntry);
         itemsEaten = view.findViewById(R.id.data_itemsEaten);
+        //radioGroup = view.findViewById(R.id.radiogroup_food);
         meal = view.findViewById(R.id.radioButton_meal);
         snack = view.findViewById(R.id.radioButton_snack);
         TextView textView = view.findViewById(R.id.label_foodGoal);
@@ -249,26 +252,35 @@ public class FoodFragment extends Fragment {
         //  c = Integer.parseInt(carbs.getText().toString());
         //}
         //Log.d("DEBUGGING", "carbs entered: " + c);
-        /*if (itemsEaten.getText().toString().equals("")) {
+        //int isSelected = radioGroup.getCheckedRadioButtonId();
+        if (itemsEaten.getText().toString().equals("")) {
             Log.d("DEBUGGING", "no itemsEaten entered");
             log.putBoolean("validInput", false);
+            itemsEaten.setError("Invalid input");
             //Toast toast=Toast.makeText(getContext(),"Please enter a short description of food eaten", Toast.LENGTH_LONG);
             //toast.show();
-            ((MainActivity)getActivity()).setMessage("foodError");
+            ((MainActivity) getActivity()).setMessage("foodError");
         }
         else {
+
             log.putBoolean("validInput", true);
-           // log.putInt("carbs", c);
+            // log.putInt("carbs", c);
             log.putString("itemsEaten", itemsEaten.getText().toString());
-        }*/
-        log.putBoolean("validInput", true);
-        if (itemsEaten.getText().toString().equals(""))
+            log.putBoolean("meal", meal.isChecked());
+            log.putBoolean("snack", snack.isChecked());
+        }
+        /*log.putBoolean("validInput", true);
+        if (itemsEaten.getText().toString().equals("")) {
             log.putString("itemsEaten", "Nothing entered");
-        else
+
+        }
+        else {
             log.putString("itemsEaten", itemsEaten.getText().toString());
-        log.putBoolean("meal", meal.isChecked());
-        log.putBoolean("snack", snack.isChecked());
+            log.putBoolean("meal", meal.isChecked());
+            log.putBoolean("snack", snack.isChecked());
+        }*/
         return log;
+
     }
 
     @Override

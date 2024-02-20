@@ -61,7 +61,7 @@ public class GoalsAdapter extends ArrayAdapter<Goal> {
         if (goal.getType().equals(Goal.ACTIVITY))
             s += " minutes";
         else if (goal.getType().contains("Medication"))
-            s+= " doses taken";
+            s += " doses taken";
         else if (goal.getType().equals(Goal.FOODMEAL))
             s = "Meal goal: " + goal.getMealsEaten() + " of " + goal.getMealAmount() + " meals eaten";
         else if (goal.getType().equals(Goal.FOODSNACK))
@@ -78,12 +78,18 @@ public class GoalsAdapter extends ArrayAdapter<Goal> {
             weeklyGoal.setText(s);
             weeklyGoal.setVisibility(View.VISIBLE);
         }
-        else if (goal.getType().contains("Medication") || goal.getType().equals(Goal.FOODSNACK)|| goal.getType().equals(Goal.FOODMEAL))
+        else if (goal.getType().contains("Medication") || goal.getType().equals(Goal.FOODSNACK) || goal.getType().equals(Goal.FOODMEAL))
             weeklyGoal.setVisibility(View.GONE);
         else
             weeklyGoal.setText(s);
 
-       goalType.setTag(position);
+        /*else if (goal.getType().contains("Medication")) {
+            dailyGoal.setVisibility(View.GONE);
+            weeklyGoal.setVisibility(View.GONE);
+
+        }*/
+
+        goalType.setTag(position);
         // Attach the click event handler
         goalType.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,8 +103,8 @@ public class GoalsAdapter extends ArrayAdapter<Goal> {
 
                 //hide or show button bar
                 if (goal.isVisible()) {
-                   goal.setVisible(false);
-                   editButton.setVisibility(View.GONE);
+                    goal.setVisible(false);
+                    editButton.setVisibility(View.GONE);
                 }
                 else {
                     goal.setVisible(true);
@@ -106,6 +112,34 @@ public class GoalsAdapter extends ArrayAdapter<Goal> {
                 }
             }
         });
+
+
+/*        goalType.setTag(position);
+        // Attach the click event handler
+        goalType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.playSoundEffect(SoundEffectConstants.CLICK);
+                int position = (Integer) view.getTag();
+                // Access the row position here to get the correct data item
+                Goal goal = getItem(position);
+                // Do what you want here...
+                Log.d("DEBUGGING", "Clicked on: " + goal.getType());
+                *//*if (goal.getType().contains("Medication")) {
+                    goal.setVisible(false);
+                    editButton.setVisibility(View.GONE);
+                } else {*//*
+                    //hide or show button bar
+                    if (goal.isVisible()) {
+                        goal.setVisible(false);
+                        editButton.setVisibility(View.GONE);
+                    } else {
+                        goal.setVisible(true);
+                        editButton.setVisibility(View.VISIBLE);
+                    }
+                *//*}*//*
+            }
+        });*/
 
         dailyGoal.setTag(position);
         // Attach the click event handler
@@ -123,8 +157,7 @@ public class GoalsAdapter extends ArrayAdapter<Goal> {
                 if (goal.isVisible()) {
                     goal.setVisible(false);
                     editButton.setVisibility(View.GONE);
-                }
-                else {
+                } else {
                     goal.setVisible(true);
                     editButton.setVisibility(View.VISIBLE);
                 }
@@ -133,7 +166,7 @@ public class GoalsAdapter extends ArrayAdapter<Goal> {
 
         weeklyGoal.setTag(position);
         // Attach the click event handler
-       weeklyGoal.setOnClickListener(new View.OnClickListener() {
+        weeklyGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 view.playSoundEffect(SoundEffectConstants.CLICK);
@@ -147,8 +180,7 @@ public class GoalsAdapter extends ArrayAdapter<Goal> {
                 if (goal.isVisible()) {
                     goal.setVisible(false);
                     editButton.setVisibility(View.GONE);
-                }
-                else {
+                } else {
                     goal.setVisible(true);
                     editButton.setVisibility(View.VISIBLE);
                 }

@@ -91,8 +91,8 @@ public class WeightFragment extends Fragment {
                     SharedPreferences sharedPreferences = getContext().getSharedPreferences("counterText", 0);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean(ConstantClass.counterText, true);
-                    editor.putBoolean(ConstantClass.weightImageText,true);
-                    editor.putBoolean(ConstantClass.todayTaskText,true);
+                    editor.putBoolean(ConstantClass.weightImageText, true);
+                    editor.putBoolean(ConstantClass.todayTaskText, true);
                     weightValue = true;
                     editor.apply();
                 }
@@ -126,12 +126,17 @@ public class WeightFragment extends Fragment {
     }
 
     public Bundle getLogData() {
-        if (weight.getText().toString().equals("")) {
+        if (weight.getText().toString().equals("")
+                || Integer.parseInt(weight.getText().toString()) < 70
+                || Integer.parseInt(weight.getText().toString()) > 500
+                ) {
             Log.d("DEBUGGING", "no weight entered");
             log.putBoolean("validInput", false);
-            //Toast toast=Toast.makeText(getContext(),"Please enter a number for your weight", Toast.LENGTH_LONG);
+            weight.setError("Invalid input");
+            //Toast toast=Toast.makeText(getContext(),"Please enter a valid input", Toast.LENGTH_LONG);
             //toast.show();
             ((MainActivity) getActivity()).setMessage("weightError");
+
         } else {
             log.putBoolean("validInput", true);
             log.putInt("weight", Integer.parseInt(weight.getText().toString()));
@@ -159,7 +164,6 @@ public class WeightFragment extends Fragment {
     //    // TODO: Update argument type and name
     //    void messageFromBloodSugar(Bundle bundle);
     //}
-
     @Override
     public void onResume() {
         super.onResume();
